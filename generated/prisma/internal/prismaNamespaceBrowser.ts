@@ -53,9 +53,9 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Listing: 'Listing',
   Application: 'Application',
-  Document: 'Document',
   ApplicationDocument: 'ApplicationDocument',
-  HumanReviewDecision: 'HumanReviewDecision'
+  HumanReviewDecision: 'HumanReviewDecision',
+  Document: 'Document'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -100,6 +100,8 @@ export const ApplicationScalarFieldEnum = {
   status: 'status',
   workflowRunId: 'workflowRunId',
   workflowStatus: 'workflowStatus',
+  lastCompletedStep: 'lastCompletedStep',
+  workflowErrorDetails: 'workflowErrorDetails',
   fraudScore: 'fraudScore',
   fraudSignals: 'fraudSignals',
   createdAt: 'createdAt',
@@ -109,36 +111,21 @@ export const ApplicationScalarFieldEnum = {
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
 
 
-export const DocumentScalarFieldEnum = {
-  id: 'id',
-  blobUrl: 'blobUrl',
-  filename: 'filename',
-  fileSize: 'fileSize',
-  mimeType: 'mimeType',
-  uploadedAt: 'uploadedAt',
-  status: 'status'
-} as const
-
-export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
-
-
 export const ApplicationDocumentScalarFieldEnum = {
-  id: 'id',
   applicationId: 'applicationId',
-  documentId: 'documentId',
   documentType: 'documentType',
   verificationStatus: 'verificationStatus',
   aiExtractedData: 'aiExtractedData',
   confidenceScore: 'confidenceScore',
   workflowStepId: 'workflowStepId',
-  extractedAt: 'extractedAt'
+  id: 'id',
+  documentId: 'documentId'
 } as const
 
 export type ApplicationDocumentScalarFieldEnum = (typeof ApplicationDocumentScalarFieldEnum)[keyof typeof ApplicationDocumentScalarFieldEnum]
 
 
 export const HumanReviewDecisionScalarFieldEnum = {
-  id: 'id',
   applicationId: 'applicationId',
   workflowRunId: 'workflowRunId',
   decision: 'decision',
@@ -146,10 +133,24 @@ export const HumanReviewDecisionScalarFieldEnum = {
   fraudContext: 'fraudContext',
   status: 'status',
   reviewedAt: 'reviewedAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  id: 'id'
 } as const
 
 export type HumanReviewDecisionScalarFieldEnum = (typeof HumanReviewDecisionScalarFieldEnum)[keyof typeof HumanReviewDecisionScalarFieldEnum]
+
+
+export const DocumentScalarFieldEnum = {
+  blobUrl: 'blobUrl',
+  filename: 'filename',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  uploadedAt: 'uploadedAt',
+  status: 'status',
+  id: 'id'
+} as const
+
+export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
 
 
 export const SortOrder = {

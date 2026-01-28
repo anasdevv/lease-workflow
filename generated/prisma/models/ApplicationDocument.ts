@@ -27,101 +27,95 @@ export type AggregateApplicationDocument = {
 }
 
 export type ApplicationDocumentAvgAggregateOutputType = {
-  id: number | null
   applicationId: number | null
-  documentId: number | null
   confidenceScore: number | null
+  id: number | null
+  documentId: number | null
 }
 
 export type ApplicationDocumentSumAggregateOutputType = {
-  id: number | null
   applicationId: number | null
-  documentId: number | null
   confidenceScore: number | null
+  id: number | null
+  documentId: number | null
 }
 
 export type ApplicationDocumentMinAggregateOutputType = {
-  id: number | null
   applicationId: number | null
-  documentId: number | null
   documentType: string | null
   verificationStatus: string | null
   confidenceScore: number | null
   workflowStepId: string | null
-  extractedAt: Date | null
+  id: number | null
+  documentId: number | null
 }
 
 export type ApplicationDocumentMaxAggregateOutputType = {
-  id: number | null
   applicationId: number | null
-  documentId: number | null
   documentType: string | null
   verificationStatus: string | null
   confidenceScore: number | null
   workflowStepId: string | null
-  extractedAt: Date | null
+  id: number | null
+  documentId: number | null
 }
 
 export type ApplicationDocumentCountAggregateOutputType = {
-  id: number
   applicationId: number
-  documentId: number
   documentType: number
   verificationStatus: number
   aiExtractedData: number
   confidenceScore: number
   workflowStepId: number
-  extractedAt: number
+  id: number
+  documentId: number
   _all: number
 }
 
 
 export type ApplicationDocumentAvgAggregateInputType = {
-  id?: true
   applicationId?: true
-  documentId?: true
   confidenceScore?: true
+  id?: true
+  documentId?: true
 }
 
 export type ApplicationDocumentSumAggregateInputType = {
-  id?: true
   applicationId?: true
-  documentId?: true
   confidenceScore?: true
+  id?: true
+  documentId?: true
 }
 
 export type ApplicationDocumentMinAggregateInputType = {
-  id?: true
   applicationId?: true
-  documentId?: true
   documentType?: true
   verificationStatus?: true
   confidenceScore?: true
   workflowStepId?: true
-  extractedAt?: true
+  id?: true
+  documentId?: true
 }
 
 export type ApplicationDocumentMaxAggregateInputType = {
-  id?: true
   applicationId?: true
-  documentId?: true
   documentType?: true
   verificationStatus?: true
   confidenceScore?: true
   workflowStepId?: true
-  extractedAt?: true
+  id?: true
+  documentId?: true
 }
 
 export type ApplicationDocumentCountAggregateInputType = {
-  id?: true
   applicationId?: true
-  documentId?: true
   documentType?: true
   verificationStatus?: true
   aiExtractedData?: true
   confidenceScore?: true
   workflowStepId?: true
-  extractedAt?: true
+  id?: true
+  documentId?: true
   _all?: true
 }
 
@@ -212,15 +206,14 @@ export type ApplicationDocumentGroupByArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 export type ApplicationDocumentGroupByOutputType = {
-  id: number
   applicationId: number
-  documentId: number
   documentType: string
   verificationStatus: string
   aiExtractedData: runtime.JsonValue | null
   confidenceScore: number | null
   workflowStepId: string | null
-  extractedAt: Date | null
+  id: number
+  documentId: number
   _count: ApplicationDocumentCountAggregateOutputType | null
   _avg: ApplicationDocumentAvgAggregateOutputType | null
   _sum: ApplicationDocumentSumAggregateOutputType | null
@@ -247,29 +240,27 @@ export type ApplicationDocumentWhereInput = {
   AND?: Prisma.ApplicationDocumentWhereInput | Prisma.ApplicationDocumentWhereInput[]
   OR?: Prisma.ApplicationDocumentWhereInput[]
   NOT?: Prisma.ApplicationDocumentWhereInput | Prisma.ApplicationDocumentWhereInput[]
-  id?: Prisma.IntFilter<"ApplicationDocument"> | number
   applicationId?: Prisma.IntFilter<"ApplicationDocument"> | number
-  documentId?: Prisma.IntFilter<"ApplicationDocument"> | number
   documentType?: Prisma.StringFilter<"ApplicationDocument"> | string
   verificationStatus?: Prisma.StringFilter<"ApplicationDocument"> | string
   aiExtractedData?: Prisma.JsonNullableFilter<"ApplicationDocument">
   confidenceScore?: Prisma.FloatNullableFilter<"ApplicationDocument"> | number | null
   workflowStepId?: Prisma.StringNullableFilter<"ApplicationDocument"> | string | null
-  extractedAt?: Prisma.DateTimeNullableFilter<"ApplicationDocument"> | Date | string | null
+  id?: Prisma.IntFilter<"ApplicationDocument"> | number
+  documentId?: Prisma.IntFilter<"ApplicationDocument"> | number
   application?: Prisma.XOR<Prisma.ApplicationScalarRelationFilter, Prisma.ApplicationWhereInput>
   document?: Prisma.XOR<Prisma.DocumentScalarRelationFilter, Prisma.DocumentWhereInput>
 }
 
 export type ApplicationDocumentOrderByWithRelationInput = {
-  id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
-  documentId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   aiExtractedData?: Prisma.SortOrderInput | Prisma.SortOrder
   confidenceScore?: Prisma.SortOrderInput | Prisma.SortOrder
   workflowStepId?: Prisma.SortOrderInput | Prisma.SortOrder
-  extractedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  id?: Prisma.SortOrder
+  documentId?: Prisma.SortOrder
   application?: Prisma.ApplicationOrderByWithRelationInput
   document?: Prisma.DocumentOrderByWithRelationInput
 }
@@ -281,27 +272,25 @@ export type ApplicationDocumentWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ApplicationDocumentWhereInput[]
   NOT?: Prisma.ApplicationDocumentWhereInput | Prisma.ApplicationDocumentWhereInput[]
   applicationId?: Prisma.IntFilter<"ApplicationDocument"> | number
-  documentId?: Prisma.IntFilter<"ApplicationDocument"> | number
   documentType?: Prisma.StringFilter<"ApplicationDocument"> | string
   verificationStatus?: Prisma.StringFilter<"ApplicationDocument"> | string
   aiExtractedData?: Prisma.JsonNullableFilter<"ApplicationDocument">
   confidenceScore?: Prisma.FloatNullableFilter<"ApplicationDocument"> | number | null
   workflowStepId?: Prisma.StringNullableFilter<"ApplicationDocument"> | string | null
-  extractedAt?: Prisma.DateTimeNullableFilter<"ApplicationDocument"> | Date | string | null
+  documentId?: Prisma.IntFilter<"ApplicationDocument"> | number
   application?: Prisma.XOR<Prisma.ApplicationScalarRelationFilter, Prisma.ApplicationWhereInput>
   document?: Prisma.XOR<Prisma.DocumentScalarRelationFilter, Prisma.DocumentWhereInput>
 }, "id" | "applicationId_documentId">
 
 export type ApplicationDocumentOrderByWithAggregationInput = {
-  id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
-  documentId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   aiExtractedData?: Prisma.SortOrderInput | Prisma.SortOrder
   confidenceScore?: Prisma.SortOrderInput | Prisma.SortOrder
   workflowStepId?: Prisma.SortOrderInput | Prisma.SortOrder
-  extractedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  id?: Prisma.SortOrder
+  documentId?: Prisma.SortOrder
   _count?: Prisma.ApplicationDocumentCountOrderByAggregateInput
   _avg?: Prisma.ApplicationDocumentAvgOrderByAggregateInput
   _max?: Prisma.ApplicationDocumentMaxOrderByAggregateInput
@@ -313,15 +302,14 @@ export type ApplicationDocumentScalarWhereWithAggregatesInput = {
   AND?: Prisma.ApplicationDocumentScalarWhereWithAggregatesInput | Prisma.ApplicationDocumentScalarWhereWithAggregatesInput[]
   OR?: Prisma.ApplicationDocumentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ApplicationDocumentScalarWhereWithAggregatesInput | Prisma.ApplicationDocumentScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"ApplicationDocument"> | number
   applicationId?: Prisma.IntWithAggregatesFilter<"ApplicationDocument"> | number
-  documentId?: Prisma.IntWithAggregatesFilter<"ApplicationDocument"> | number
   documentType?: Prisma.StringWithAggregatesFilter<"ApplicationDocument"> | string
   verificationStatus?: Prisma.StringWithAggregatesFilter<"ApplicationDocument"> | string
   aiExtractedData?: Prisma.JsonNullableWithAggregatesFilter<"ApplicationDocument">
   confidenceScore?: Prisma.FloatNullableWithAggregatesFilter<"ApplicationDocument"> | number | null
   workflowStepId?: Prisma.StringNullableWithAggregatesFilter<"ApplicationDocument"> | string | null
-  extractedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ApplicationDocument"> | Date | string | null
+  id?: Prisma.IntWithAggregatesFilter<"ApplicationDocument"> | number
+  documentId?: Prisma.IntWithAggregatesFilter<"ApplicationDocument"> | number
 }
 
 export type ApplicationDocumentCreateInput = {
@@ -330,21 +318,19 @@ export type ApplicationDocumentCreateInput = {
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: number | null
   workflowStepId?: string | null
-  extractedAt?: Date | string | null
   application: Prisma.ApplicationCreateNestedOneWithoutDocumentsInput
   document: Prisma.DocumentCreateNestedOneWithoutApplicationDocumentsInput
 }
 
 export type ApplicationDocumentUncheckedCreateInput = {
-  id?: number
   applicationId: number
-  documentId: number
   documentType: string
   verificationStatus?: string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: number | null
   workflowStepId?: string | null
-  extractedAt?: Date | string | null
+  id?: number
+  documentId: number
 }
 
 export type ApplicationDocumentUpdateInput = {
@@ -353,33 +339,30 @@ export type ApplicationDocumentUpdateInput = {
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   workflowStepId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extractedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   application?: Prisma.ApplicationUpdateOneRequiredWithoutDocumentsNestedInput
   document?: Prisma.DocumentUpdateOneRequiredWithoutApplicationDocumentsNestedInput
 }
 
 export type ApplicationDocumentUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   applicationId?: Prisma.IntFieldUpdateOperationsInput | number
-  documentId?: Prisma.IntFieldUpdateOperationsInput | number
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   workflowStepId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extractedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  documentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ApplicationDocumentCreateManyInput = {
-  id?: number
   applicationId: number
-  documentId: number
   documentType: string
   verificationStatus?: string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: number | null
   workflowStepId?: string | null
-  extractedAt?: Date | string | null
+  id?: number
+  documentId: number
 }
 
 export type ApplicationDocumentUpdateManyMutationInput = {
@@ -388,19 +371,17 @@ export type ApplicationDocumentUpdateManyMutationInput = {
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   workflowStepId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extractedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ApplicationDocumentUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   applicationId?: Prisma.IntFieldUpdateOperationsInput | number
-  documentId?: Prisma.IntFieldUpdateOperationsInput | number
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   workflowStepId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extractedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  documentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ApplicationDocumentListRelationFilter = {
@@ -419,51 +400,48 @@ export type ApplicationDocumentApplicationIdDocumentIdCompoundUniqueInput = {
 }
 
 export type ApplicationDocumentCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
-  documentId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   aiExtractedData?: Prisma.SortOrder
   confidenceScore?: Prisma.SortOrder
   workflowStepId?: Prisma.SortOrder
-  extractedAt?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+  documentId?: Prisma.SortOrder
 }
 
 export type ApplicationDocumentAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
-  documentId?: Prisma.SortOrder
   confidenceScore?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+  documentId?: Prisma.SortOrder
 }
 
 export type ApplicationDocumentMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
-  documentId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   confidenceScore?: Prisma.SortOrder
   workflowStepId?: Prisma.SortOrder
-  extractedAt?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+  documentId?: Prisma.SortOrder
 }
 
 export type ApplicationDocumentMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
-  documentId?: Prisma.SortOrder
   documentType?: Prisma.SortOrder
   verificationStatus?: Prisma.SortOrder
   confidenceScore?: Prisma.SortOrder
   workflowStepId?: Prisma.SortOrder
-  extractedAt?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+  documentId?: Prisma.SortOrder
 }
 
 export type ApplicationDocumentSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
-  documentId?: Prisma.SortOrder
   confidenceScore?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+  documentId?: Prisma.SortOrder
 }
 
 export type ApplicationDocumentCreateNestedManyWithoutApplicationInput = {
@@ -550,29 +528,23 @@ export type ApplicationDocumentUncheckedUpdateManyWithoutDocumentNestedInput = {
   deleteMany?: Prisma.ApplicationDocumentScalarWhereInput | Prisma.ApplicationDocumentScalarWhereInput[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type ApplicationDocumentCreateWithoutApplicationInput = {
   documentType: string
   verificationStatus?: string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: number | null
   workflowStepId?: string | null
-  extractedAt?: Date | string | null
   document: Prisma.DocumentCreateNestedOneWithoutApplicationDocumentsInput
 }
 
 export type ApplicationDocumentUncheckedCreateWithoutApplicationInput = {
-  id?: number
-  documentId: number
   documentType: string
   verificationStatus?: string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: number | null
   workflowStepId?: string | null
-  extractedAt?: Date | string | null
+  id?: number
+  documentId: number
 }
 
 export type ApplicationDocumentCreateOrConnectWithoutApplicationInput = {
@@ -605,15 +577,14 @@ export type ApplicationDocumentScalarWhereInput = {
   AND?: Prisma.ApplicationDocumentScalarWhereInput | Prisma.ApplicationDocumentScalarWhereInput[]
   OR?: Prisma.ApplicationDocumentScalarWhereInput[]
   NOT?: Prisma.ApplicationDocumentScalarWhereInput | Prisma.ApplicationDocumentScalarWhereInput[]
-  id?: Prisma.IntFilter<"ApplicationDocument"> | number
   applicationId?: Prisma.IntFilter<"ApplicationDocument"> | number
-  documentId?: Prisma.IntFilter<"ApplicationDocument"> | number
   documentType?: Prisma.StringFilter<"ApplicationDocument"> | string
   verificationStatus?: Prisma.StringFilter<"ApplicationDocument"> | string
   aiExtractedData?: Prisma.JsonNullableFilter<"ApplicationDocument">
   confidenceScore?: Prisma.FloatNullableFilter<"ApplicationDocument"> | number | null
   workflowStepId?: Prisma.StringNullableFilter<"ApplicationDocument"> | string | null
-  extractedAt?: Prisma.DateTimeNullableFilter<"ApplicationDocument"> | Date | string | null
+  id?: Prisma.IntFilter<"ApplicationDocument"> | number
+  documentId?: Prisma.IntFilter<"ApplicationDocument"> | number
 }
 
 export type ApplicationDocumentCreateWithoutDocumentInput = {
@@ -622,19 +593,17 @@ export type ApplicationDocumentCreateWithoutDocumentInput = {
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: number | null
   workflowStepId?: string | null
-  extractedAt?: Date | string | null
   application: Prisma.ApplicationCreateNestedOneWithoutDocumentsInput
 }
 
 export type ApplicationDocumentUncheckedCreateWithoutDocumentInput = {
-  id?: number
   applicationId: number
   documentType: string
   verificationStatus?: string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: number | null
   workflowStepId?: string | null
-  extractedAt?: Date | string | null
+  id?: number
 }
 
 export type ApplicationDocumentCreateOrConnectWithoutDocumentInput = {
@@ -664,14 +633,13 @@ export type ApplicationDocumentUpdateManyWithWhereWithoutDocumentInput = {
 }
 
 export type ApplicationDocumentCreateManyApplicationInput = {
-  id?: number
-  documentId: number
   documentType: string
   verificationStatus?: string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: number | null
   workflowStepId?: string | null
-  extractedAt?: Date | string | null
+  id?: number
+  documentId: number
 }
 
 export type ApplicationDocumentUpdateWithoutApplicationInput = {
@@ -680,41 +648,37 @@ export type ApplicationDocumentUpdateWithoutApplicationInput = {
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   workflowStepId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extractedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   document?: Prisma.DocumentUpdateOneRequiredWithoutApplicationDocumentsNestedInput
 }
 
 export type ApplicationDocumentUncheckedUpdateWithoutApplicationInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  documentId?: Prisma.IntFieldUpdateOperationsInput | number
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   workflowStepId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extractedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  documentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ApplicationDocumentUncheckedUpdateManyWithoutApplicationInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  documentId?: Prisma.IntFieldUpdateOperationsInput | number
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   workflowStepId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extractedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  documentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ApplicationDocumentCreateManyDocumentInput = {
-  id?: number
   applicationId: number
   documentType: string
   verificationStatus?: string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: number | null
   workflowStepId?: string | null
-  extractedAt?: Date | string | null
+  id?: number
 }
 
 export type ApplicationDocumentUpdateWithoutDocumentInput = {
@@ -723,89 +687,82 @@ export type ApplicationDocumentUpdateWithoutDocumentInput = {
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   workflowStepId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extractedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   application?: Prisma.ApplicationUpdateOneRequiredWithoutDocumentsNestedInput
 }
 
 export type ApplicationDocumentUncheckedUpdateWithoutDocumentInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   applicationId?: Prisma.IntFieldUpdateOperationsInput | number
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   workflowStepId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extractedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ApplicationDocumentUncheckedUpdateManyWithoutDocumentInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   applicationId?: Prisma.IntFieldUpdateOperationsInput | number
   documentType?: Prisma.StringFieldUpdateOperationsInput | string
   verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
   aiExtractedData?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   confidenceScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   workflowStepId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  extractedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
 
 export type ApplicationDocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   applicationId?: boolean
-  documentId?: boolean
   documentType?: boolean
   verificationStatus?: boolean
   aiExtractedData?: boolean
   confidenceScore?: boolean
   workflowStepId?: boolean
-  extractedAt?: boolean
+  id?: boolean
+  documentId?: boolean
   application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
   document?: boolean | Prisma.DocumentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["applicationDocument"]>
 
 export type ApplicationDocumentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   applicationId?: boolean
-  documentId?: boolean
   documentType?: boolean
   verificationStatus?: boolean
   aiExtractedData?: boolean
   confidenceScore?: boolean
   workflowStepId?: boolean
-  extractedAt?: boolean
+  id?: boolean
+  documentId?: boolean
   application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
   document?: boolean | Prisma.DocumentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["applicationDocument"]>
 
 export type ApplicationDocumentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   applicationId?: boolean
-  documentId?: boolean
   documentType?: boolean
   verificationStatus?: boolean
   aiExtractedData?: boolean
   confidenceScore?: boolean
   workflowStepId?: boolean
-  extractedAt?: boolean
+  id?: boolean
+  documentId?: boolean
   application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
   document?: boolean | Prisma.DocumentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["applicationDocument"]>
 
 export type ApplicationDocumentSelectScalar = {
-  id?: boolean
   applicationId?: boolean
-  documentId?: boolean
   documentType?: boolean
   verificationStatus?: boolean
   aiExtractedData?: boolean
   confidenceScore?: boolean
   workflowStepId?: boolean
-  extractedAt?: boolean
+  id?: boolean
+  documentId?: boolean
 }
 
-export type ApplicationDocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationId" | "documentId" | "documentType" | "verificationStatus" | "aiExtractedData" | "confidenceScore" | "workflowStepId" | "extractedAt", ExtArgs["result"]["applicationDocument"]>
+export type ApplicationDocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"applicationId" | "documentType" | "verificationStatus" | "aiExtractedData" | "confidenceScore" | "workflowStepId" | "id" | "documentId", ExtArgs["result"]["applicationDocument"]>
 export type ApplicationDocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
   document?: boolean | Prisma.DocumentDefaultArgs<ExtArgs>
@@ -826,15 +783,14 @@ export type $ApplicationDocumentPayload<ExtArgs extends runtime.Types.Extensions
     document: Prisma.$DocumentPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
     applicationId: number
-    documentId: number
     documentType: string
     verificationStatus: string
     aiExtractedData: runtime.JsonValue | null
     confidenceScore: number | null
     workflowStepId: string | null
-    extractedAt: Date | null
+    id: number
+    documentId: number
   }, ExtArgs["result"]["applicationDocument"]>
   composites: {}
 }
@@ -918,8 +874,8 @@ export interface ApplicationDocumentDelegate<ExtArgs extends runtime.Types.Exten
    * // Get first 10 ApplicationDocuments
    * const applicationDocuments = await prisma.applicationDocument.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const applicationDocumentWithIdOnly = await prisma.applicationDocument.findMany({ select: { id: true } })
+   * // Only select the `applicationId`
+   * const applicationDocumentWithApplicationIdOnly = await prisma.applicationDocument.findMany({ select: { applicationId: true } })
    * 
    */
   findMany<T extends ApplicationDocumentFindManyArgs>(args?: Prisma.SelectSubset<T, ApplicationDocumentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -963,9 +919,9 @@ export interface ApplicationDocumentDelegate<ExtArgs extends runtime.Types.Exten
    *   ]
    * })
    * 
-   * // Create many ApplicationDocuments and only return the `id`
-   * const applicationDocumentWithIdOnly = await prisma.applicationDocument.createManyAndReturn({
-   *   select: { id: true },
+   * // Create many ApplicationDocuments and only return the `applicationId`
+   * const applicationDocumentWithApplicationIdOnly = await prisma.applicationDocument.createManyAndReturn({
+   *   select: { applicationId: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -1054,9 +1010,9 @@ export interface ApplicationDocumentDelegate<ExtArgs extends runtime.Types.Exten
    *   ]
    * })
    * 
-   * // Update zero or more ApplicationDocuments and only return the `id`
-   * const applicationDocumentWithIdOnly = await prisma.applicationDocument.updateManyAndReturn({
-   *   select: { id: true },
+   * // Update zero or more ApplicationDocuments and only return the `applicationId`
+   * const applicationDocumentWithApplicationIdOnly = await prisma.applicationDocument.updateManyAndReturn({
+   *   select: { applicationId: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1260,15 +1216,14 @@ export interface Prisma__ApplicationDocumentClient<T, Null = never, ExtArgs exte
  * Fields of the ApplicationDocument model
  */
 export interface ApplicationDocumentFieldRefs {
-  readonly id: Prisma.FieldRef<"ApplicationDocument", 'Int'>
   readonly applicationId: Prisma.FieldRef<"ApplicationDocument", 'Int'>
-  readonly documentId: Prisma.FieldRef<"ApplicationDocument", 'Int'>
   readonly documentType: Prisma.FieldRef<"ApplicationDocument", 'String'>
   readonly verificationStatus: Prisma.FieldRef<"ApplicationDocument", 'String'>
   readonly aiExtractedData: Prisma.FieldRef<"ApplicationDocument", 'Json'>
   readonly confidenceScore: Prisma.FieldRef<"ApplicationDocument", 'Float'>
   readonly workflowStepId: Prisma.FieldRef<"ApplicationDocument", 'String'>
-  readonly extractedAt: Prisma.FieldRef<"ApplicationDocument", 'DateTime'>
+  readonly id: Prisma.FieldRef<"ApplicationDocument", 'Int'>
+  readonly documentId: Prisma.FieldRef<"ApplicationDocument", 'Int'>
 }
     
 

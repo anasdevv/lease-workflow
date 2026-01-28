@@ -42,16 +42,17 @@ import { ApplicationQueryTag } from '@/hooks/use-applications';
 interface ApplicationFormProps {
     listings: Listing[];
     onSuccess?: () => void;
+    onApplicationCreated?: (applicationId: number) => void;
 }
 
-export default function ApplicationForm({ listings, onSuccess }: ApplicationFormProps) {
+export default function ApplicationForm({ listings, onSuccess, onApplicationCreated }: ApplicationFormProps) {
     const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'submitting' | 'success'>('idle');
     const queryClient = useQueryClient();
     console.log('listings', listings);
     const form = useForm<ApplicationFormValues>({
         resolver: zodResolver(applicationFormSchema),
         defaultValues: {
-            listingId: 0,
+            listingId: -1,
             applicantName: '',
             applicantEmail: '',
         },
@@ -100,6 +101,12 @@ export default function ApplicationForm({ listings, onSuccess }: ApplicationForm
                 toast.success('Application submitted successfully!', {
                     description: `Application ID: ${result.data?.id}`,
                 });
+                
+                // Track the newly created application for polling
+                if (result.data?.id) {
+                    onApplicationCreated?.(result.data.id);
+                }
+                
                 queryClient.invalidateQueries({
                     queryKey: [ApplicationQueryTag.APPLICATIONS, ApplicationQueryTag.APPLICATION_STATS]
                 })

@@ -1,12 +1,20 @@
+
 export async function analyzeDocument(
   blobUrl: string,
-  documentType: string
+  documentType: string,
+  filename?: string
 ) {
-  // Simplified - in production, fetch actual document and process
-  // For demo, return mock data based on type
   
-  await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate processing
+  await new Promise(resolve => setTimeout(resolve, 3000)); // Simulate processing
   
+if(filename?.includes('test')) {
+    return { data: {
+       fullName: 'John Wick',
+        dateOfBirth: '1990-01-01',
+        address: '123 Main St',
+    }, confidence: 0.2 };
+  }
+
   if (documentType === 'pay_stub') {
     return {
       data: {

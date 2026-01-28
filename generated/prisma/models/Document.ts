@@ -27,85 +27,85 @@ export type AggregateDocument = {
 }
 
 export type DocumentAvgAggregateOutputType = {
-  id: number | null
   fileSize: number | null
+  id: number | null
 }
 
 export type DocumentSumAggregateOutputType = {
-  id: number | null
   fileSize: number | null
+  id: number | null
 }
 
 export type DocumentMinAggregateOutputType = {
-  id: number | null
   blobUrl: string | null
   filename: string | null
   fileSize: number | null
   mimeType: string | null
   uploadedAt: Date | null
   status: string | null
+  id: number | null
 }
 
 export type DocumentMaxAggregateOutputType = {
-  id: number | null
   blobUrl: string | null
   filename: string | null
   fileSize: number | null
   mimeType: string | null
   uploadedAt: Date | null
   status: string | null
+  id: number | null
 }
 
 export type DocumentCountAggregateOutputType = {
-  id: number
   blobUrl: number
   filename: number
   fileSize: number
   mimeType: number
   uploadedAt: number
   status: number
+  id: number
   _all: number
 }
 
 
 export type DocumentAvgAggregateInputType = {
-  id?: true
   fileSize?: true
+  id?: true
 }
 
 export type DocumentSumAggregateInputType = {
-  id?: true
   fileSize?: true
+  id?: true
 }
 
 export type DocumentMinAggregateInputType = {
-  id?: true
   blobUrl?: true
   filename?: true
   fileSize?: true
   mimeType?: true
   uploadedAt?: true
   status?: true
+  id?: true
 }
 
 export type DocumentMaxAggregateInputType = {
-  id?: true
   blobUrl?: true
   filename?: true
   fileSize?: true
   mimeType?: true
   uploadedAt?: true
   status?: true
+  id?: true
 }
 
 export type DocumentCountAggregateInputType = {
-  id?: true
   blobUrl?: true
   filename?: true
   fileSize?: true
   mimeType?: true
   uploadedAt?: true
   status?: true
+  id?: true
   _all?: true
 }
 
@@ -196,13 +196,13 @@ export type DocumentGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 export type DocumentGroupByOutputType = {
-  id: number
   blobUrl: string
   filename: string
   fileSize: number
   mimeType: string
   uploadedAt: Date
   status: string
+  id: number
   _count: DocumentCountAggregateOutputType | null
   _avg: DocumentAvgAggregateOutputType | null
   _sum: DocumentSumAggregateOutputType | null
@@ -229,24 +229,24 @@ export type DocumentWhereInput = {
   AND?: Prisma.DocumentWhereInput | Prisma.DocumentWhereInput[]
   OR?: Prisma.DocumentWhereInput[]
   NOT?: Prisma.DocumentWhereInput | Prisma.DocumentWhereInput[]
-  id?: Prisma.IntFilter<"Document"> | number
   blobUrl?: Prisma.StringFilter<"Document"> | string
   filename?: Prisma.StringFilter<"Document"> | string
   fileSize?: Prisma.IntFilter<"Document"> | number
   mimeType?: Prisma.StringFilter<"Document"> | string
   uploadedAt?: Prisma.DateTimeFilter<"Document"> | Date | string
   status?: Prisma.StringFilter<"Document"> | string
+  id?: Prisma.IntFilter<"Document"> | number
   applicationDocuments?: Prisma.ApplicationDocumentListRelationFilter
 }
 
 export type DocumentOrderByWithRelationInput = {
-  id?: Prisma.SortOrder
   blobUrl?: Prisma.SortOrder
   filename?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
   mimeType?: Prisma.SortOrder
   uploadedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  id?: Prisma.SortOrder
   applicationDocuments?: Prisma.ApplicationDocumentOrderByRelationAggregateInput
 }
 
@@ -265,13 +265,13 @@ export type DocumentWhereUniqueInput = Prisma.AtLeast<{
 }, "id">
 
 export type DocumentOrderByWithAggregationInput = {
-  id?: Prisma.SortOrder
   blobUrl?: Prisma.SortOrder
   filename?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
   mimeType?: Prisma.SortOrder
   uploadedAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  id?: Prisma.SortOrder
   _count?: Prisma.DocumentCountOrderByAggregateInput
   _avg?: Prisma.DocumentAvgOrderByAggregateInput
   _max?: Prisma.DocumentMaxOrderByAggregateInput
@@ -283,13 +283,13 @@ export type DocumentScalarWhereWithAggregatesInput = {
   AND?: Prisma.DocumentScalarWhereWithAggregatesInput | Prisma.DocumentScalarWhereWithAggregatesInput[]
   OR?: Prisma.DocumentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DocumentScalarWhereWithAggregatesInput | Prisma.DocumentScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Document"> | number
   blobUrl?: Prisma.StringWithAggregatesFilter<"Document"> | string
   filename?: Prisma.StringWithAggregatesFilter<"Document"> | string
   fileSize?: Prisma.IntWithAggregatesFilter<"Document"> | number
   mimeType?: Prisma.StringWithAggregatesFilter<"Document"> | string
   uploadedAt?: Prisma.DateTimeWithAggregatesFilter<"Document"> | Date | string
   status?: Prisma.StringWithAggregatesFilter<"Document"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Document"> | number
 }
 
 export type DocumentCreateInput = {
@@ -303,13 +303,13 @@ export type DocumentCreateInput = {
 }
 
 export type DocumentUncheckedCreateInput = {
-  id?: number
   blobUrl: string
   filename: string
   fileSize: number
   mimeType: string
   uploadedAt?: Date | string
   status?: string
+  id?: number
   applicationDocuments?: Prisma.ApplicationDocumentUncheckedCreateNestedManyWithoutDocumentInput
 }
 
@@ -324,24 +324,24 @@ export type DocumentUpdateInput = {
 }
 
 export type DocumentUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   blobUrl?: Prisma.StringFieldUpdateOperationsInput | string
   filename?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDocuments?: Prisma.ApplicationDocumentUncheckedUpdateManyWithoutDocumentNestedInput
 }
 
 export type DocumentCreateManyInput = {
-  id?: number
   blobUrl: string
   filename: string
   fileSize: number
   mimeType: string
   uploadedAt?: Date | string
   status?: string
+  id?: number
 }
 
 export type DocumentUpdateManyMutationInput = {
@@ -354,58 +354,58 @@ export type DocumentUpdateManyMutationInput = {
 }
 
 export type DocumentUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   blobUrl?: Prisma.StringFieldUpdateOperationsInput | string
   filename?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type DocumentCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  blobUrl?: Prisma.SortOrder
-  filename?: Prisma.SortOrder
-  fileSize?: Prisma.SortOrder
-  mimeType?: Prisma.SortOrder
-  uploadedAt?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-}
-
-export type DocumentAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  fileSize?: Prisma.SortOrder
-}
-
-export type DocumentMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  blobUrl?: Prisma.SortOrder
-  filename?: Prisma.SortOrder
-  fileSize?: Prisma.SortOrder
-  mimeType?: Prisma.SortOrder
-  uploadedAt?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-}
-
-export type DocumentMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  blobUrl?: Prisma.SortOrder
-  filename?: Prisma.SortOrder
-  fileSize?: Prisma.SortOrder
-  mimeType?: Prisma.SortOrder
-  uploadedAt?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-}
-
-export type DocumentSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  fileSize?: Prisma.SortOrder
+  id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DocumentScalarRelationFilter = {
   is?: Prisma.DocumentWhereInput
   isNot?: Prisma.DocumentWhereInput
+}
+
+export type DocumentCountOrderByAggregateInput = {
+  blobUrl?: Prisma.SortOrder
+  filename?: Prisma.SortOrder
+  fileSize?: Prisma.SortOrder
+  mimeType?: Prisma.SortOrder
+  uploadedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+}
+
+export type DocumentAvgOrderByAggregateInput = {
+  fileSize?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+}
+
+export type DocumentMaxOrderByAggregateInput = {
+  blobUrl?: Prisma.SortOrder
+  filename?: Prisma.SortOrder
+  fileSize?: Prisma.SortOrder
+  mimeType?: Prisma.SortOrder
+  uploadedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+}
+
+export type DocumentMinOrderByAggregateInput = {
+  blobUrl?: Prisma.SortOrder
+  filename?: Prisma.SortOrder
+  fileSize?: Prisma.SortOrder
+  mimeType?: Prisma.SortOrder
+  uploadedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  id?: Prisma.SortOrder
+}
+
+export type DocumentSumOrderByAggregateInput = {
+  fileSize?: Prisma.SortOrder
+  id?: Prisma.SortOrder
 }
 
 export type DocumentCreateNestedOneWithoutApplicationDocumentsInput = {
@@ -432,13 +432,13 @@ export type DocumentCreateWithoutApplicationDocumentsInput = {
 }
 
 export type DocumentUncheckedCreateWithoutApplicationDocumentsInput = {
-  id?: number
   blobUrl: string
   filename: string
   fileSize: number
   mimeType: string
   uploadedAt?: Date | string
   status?: string
+  id?: number
 }
 
 export type DocumentCreateOrConnectWithoutApplicationDocumentsInput = {
@@ -467,13 +467,13 @@ export type DocumentUpdateWithoutApplicationDocumentsInput = {
 }
 
 export type DocumentUncheckedUpdateWithoutApplicationDocumentsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
   blobUrl?: Prisma.StringFieldUpdateOperationsInput | string
   filename?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
   mimeType?: Prisma.StringFieldUpdateOperationsInput | string
   uploadedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -508,48 +508,48 @@ export type DocumentCountOutputTypeCountApplicationDocumentsArgs<ExtArgs extends
 
 
 export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   blobUrl?: boolean
   filename?: boolean
   fileSize?: boolean
   mimeType?: boolean
   uploadedAt?: boolean
   status?: boolean
+  id?: boolean
   applicationDocuments?: boolean | Prisma.Document$applicationDocumentsArgs<ExtArgs>
   _count?: boolean | Prisma.DocumentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["document"]>
 
 export type DocumentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   blobUrl?: boolean
   filename?: boolean
   fileSize?: boolean
   mimeType?: boolean
   uploadedAt?: boolean
   status?: boolean
+  id?: boolean
 }, ExtArgs["result"]["document"]>
 
 export type DocumentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   blobUrl?: boolean
   filename?: boolean
   fileSize?: boolean
   mimeType?: boolean
   uploadedAt?: boolean
   status?: boolean
+  id?: boolean
 }, ExtArgs["result"]["document"]>
 
 export type DocumentSelectScalar = {
-  id?: boolean
   blobUrl?: boolean
   filename?: boolean
   fileSize?: boolean
   mimeType?: boolean
   uploadedAt?: boolean
   status?: boolean
+  id?: boolean
 }
 
-export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "blobUrl" | "filename" | "fileSize" | "mimeType" | "uploadedAt" | "status", ExtArgs["result"]["document"]>
+export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"blobUrl" | "filename" | "fileSize" | "mimeType" | "uploadedAt" | "status" | "id", ExtArgs["result"]["document"]>
 export type DocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   applicationDocuments?: boolean | Prisma.Document$applicationDocumentsArgs<ExtArgs>
   _count?: boolean | Prisma.DocumentCountOutputTypeDefaultArgs<ExtArgs>
@@ -563,13 +563,13 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     applicationDocuments: Prisma.$ApplicationDocumentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
     blobUrl: string
     filename: string
     fileSize: number
     mimeType: string
     uploadedAt: Date
     status: string
+    id: number
   }, ExtArgs["result"]["document"]>
   composites: {}
 }
@@ -653,8 +653,8 @@ export interface DocumentDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    * // Get first 10 Documents
    * const documents = await prisma.document.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const documentWithIdOnly = await prisma.document.findMany({ select: { id: true } })
+   * // Only select the `blobUrl`
+   * const documentWithBlobUrlOnly = await prisma.document.findMany({ select: { blobUrl: true } })
    * 
    */
   findMany<T extends DocumentFindManyArgs>(args?: Prisma.SelectSubset<T, DocumentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -698,9 +698,9 @@ export interface DocumentDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    *   ]
    * })
    * 
-   * // Create many Documents and only return the `id`
-   * const documentWithIdOnly = await prisma.document.createManyAndReturn({
-   *   select: { id: true },
+   * // Create many Documents and only return the `blobUrl`
+   * const documentWithBlobUrlOnly = await prisma.document.createManyAndReturn({
+   *   select: { blobUrl: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -789,9 +789,9 @@ export interface DocumentDelegate<ExtArgs extends runtime.Types.Extensions.Inter
    *   ]
    * })
    * 
-   * // Update zero or more Documents and only return the `id`
-   * const documentWithIdOnly = await prisma.document.updateManyAndReturn({
-   *   select: { id: true },
+   * // Update zero or more Documents and only return the `blobUrl`
+   * const documentWithBlobUrlOnly = await prisma.document.updateManyAndReturn({
+   *   select: { blobUrl: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -994,13 +994,13 @@ export interface Prisma__DocumentClient<T, Null = never, ExtArgs extends runtime
  * Fields of the Document model
  */
 export interface DocumentFieldRefs {
-  readonly id: Prisma.FieldRef<"Document", 'Int'>
   readonly blobUrl: Prisma.FieldRef<"Document", 'String'>
   readonly filename: Prisma.FieldRef<"Document", 'String'>
   readonly fileSize: Prisma.FieldRef<"Document", 'Int'>
   readonly mimeType: Prisma.FieldRef<"Document", 'String'>
   readonly uploadedAt: Prisma.FieldRef<"Document", 'DateTime'>
   readonly status: Prisma.FieldRef<"Document", 'String'>
+  readonly id: Prisma.FieldRef<"Document", 'Int'>
 }
     
 

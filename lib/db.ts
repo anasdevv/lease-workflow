@@ -14,11 +14,11 @@ const prismaClientSingleton = () => {
     }),
   })
 
-  prisma.$on('query', (e) => {
-    console.log('Query: ' + e.query);
-    console.log('Params: ' + e.params);
-    console.log('Duration: ' + e.duration + 'ms');
-  });
+  // prisma.$on('query', (e) => {
+  //   console.log('Query: ' + e.query);
+  //   console.log('Params: ' + e.params);
+  //   console.log('Duration: ' + e.duration + 'ms');
+  // });
 
   // prisma.$on('warn', (e) => {
   //   console.log(e);
@@ -28,9 +28,9 @@ const prismaClientSingleton = () => {
   //   console.log(e);
   // });
 
-  prisma.$on('error', (e) => {
-    console.log(JSON.stringify(e,null,3));
-  });
+  // prisma.$on('error', (e) => {
+  //   console.log(JSON.stringify(e,null,3));
+  // });
   return prisma;
 }
 

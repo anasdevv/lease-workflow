@@ -10,7 +10,7 @@
  */
 export type * from './models/Listing'
 export type * from './models/Application'
-export type * from './models/Document'
 export type * from './models/ApplicationDocument'
 export type * from './models/HumanReviewDecision'
+export type * from './models/Document'
 export type * from './commonInputTypes'

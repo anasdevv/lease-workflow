@@ -50,17 +50,22 @@ export type Listing = Prisma.ListingModel
  */
 export type Application = Prisma.ApplicationModel
 /**
- * Model Document
- * 
- */
-export type Document = Prisma.DocumentModel
-/**
  * Model ApplicationDocument
  * 
  */
 export type ApplicationDocument = Prisma.ApplicationDocumentModel
+
+export type ApplicationDocumentWithDocument = Prisma.ApplicationDocumentModel & {
+  document: Document
+}
+
 /**
  * Model HumanReviewDecision
  * 
  */
 export type HumanReviewDecision = Prisma.HumanReviewDecisionModel
+/**
+ * Model Document
+ * 
+ */
+export type Document = Prisma.DocumentModel

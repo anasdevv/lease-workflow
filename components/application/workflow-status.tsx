@@ -4,22 +4,16 @@ import { Badge } from '@/components/ui/badge';
 import {
   CheckCircle2,
   Circle,
-  Clock,
   AlertCircle,
   XCircle,
   Loader2,
-  Pause,
   LucideIcon,
 } from 'lucide-react';
+import { WORKFLOW_STEPS, getStepNumber, getCompletedSteps } from '@/lib/utils';
 import type { Application, ApplicationStatus, WorkflowStatus as WorkflowStatusType } from '@/types';
 
 interface WorkflowStatusProps {
   application: Application;
-}
-
-interface WorkflowStep {
-  id: string;
-  label: string;
 }
 
 interface StatusConfig {
@@ -35,15 +29,6 @@ interface WorkflowStatusConfig {
   color: string;
 }
 
-const WORKFLOW_STEPS: WorkflowStep[] = [
-  { id: 'submitted', label: 'Application Submitted' },
-  { id: 'document_verification', label: 'Document Verification' },
-  { id: 'fraud_check', label: 'Fraud Detection' },
-  { id: 'income_verification', label: 'Income Verification' },
-  { id: 'background_check', label: 'Background Check' },
-  { id: 'final_review', label: 'Final Review' },
-];
-
 const STATUS_CONFIG: Record<ApplicationStatus, StatusConfig> = {
   draft: { label: 'Draft', color: 'bg-slate-100 text-slate-700', icon: Circle },
   submitted: { label: 'Submitted', color: 'bg-blue-100 text-blue-700', icon: CheckCircle2 },
@@ -54,10 +39,40 @@ const STATUS_CONFIG: Record<ApplicationStatus, StatusConfig> = {
 
 const WORKFLOW_STATUS_CONFIG: Record<WorkflowStatusType, WorkflowStatusConfig> = {
   running: { label: 'Running', icon: Loader2, spin: true, color: 'text-blue-600' },
-  paused_for_review: { label: 'Paused for Review', icon: Pause, color: 'text-amber-600' },
+  paused_for_review: { label: 'Paused for Review', icon: AlertCircle, color: 'text-amber-600' },
   completed: { label: 'Completed', icon: CheckCircle2, color: 'text-green-600' },
   failed: { label: 'Failed', icon: XCircle, color: 'text-red-600' },
 };
+
+type StepStatus = 'completed' | 'failed' | 'pending' | 'current';
+
+/**
+ * Determines the current step status based on database lastCompletedStep
+ */
+function getStepStatus(
+  stepNumber: number,
+  lastCompletedStepNumber: number,
+  workflowStatus: WorkflowStatusType | null,
+  isLastStep: boolean
+): StepStatus {
+  // If this step is completed
+  if (stepNumber <= lastCompletedStepNumber) {
+    return 'completed';
+  }
+
+  // If workflow failed and this is next step after last completed
+  if (workflowStatus === 'failed' && stepNumber === lastCompletedStepNumber + 1) {
+    return 'failed';
+  }
+
+  // If this is the next step to be executed (current)
+  if (stepNumber === lastCompletedStepNumber + 1) {
+    return 'current';
+  }
+
+  // Otherwise pending
+  return 'pending';
+}
 
 export default function WorkflowStatus({ application }: WorkflowStatusProps) {
   const status = STATUS_CONFIG[application.status] || STATUS_CONFIG.draft;
@@ -68,23 +83,10 @@ export default function WorkflowStatus({ application }: WorkflowStatusProps) {
     : null;
   const WorkflowIcon = workflowConfig?.icon;
 
-  // Map current step based on status and workflow status
-  const getCurrentStep = (): number => {
-    // If workflow is running or paused, determine step based on application status
-    if (application.status === 'approved') return 6;
-    if (application.status === 'rejected') return 6;
-    if (application.status === 'processing') {
-      // If stuck, stay at current position
-      if (application.workflowStatus === 'paused_for_review' || application.workflowStatus === 'failed') {
-        return 3;
-      }
-      return 3;
-    }
-    if (application.status === 'submitted') return 1;
-    return 0;
-  };
-
-  const currentStep = getCurrentStep();
+  // Get last completed step number from database
+  const lastCompletedStepNumber = getStepNumber(application.lastCompletedStep || '');
+  console.log('application.lastCompletedStep', application.lastCompletedStep,lastCompletedStepNumber);
+  const completedSteps = getCompletedSteps(application.lastCompletedStep);
 
   return (
     <Card className="border-0 shadow-lg">
@@ -127,9 +129,17 @@ export default function WorkflowStatus({ application }: WorkflowStatusProps) {
         {/* Progress Steps */}
         <div className="space-y-4">
           {WORKFLOW_STEPS.map((step, index) => {
-            const isCompleted = index < currentStep;
-            const isCurrent = index === currentStep;
-            const isPending = index > currentStep;
+            const stepStatus = getStepStatus(
+              step.number,
+              lastCompletedStepNumber,
+              application.workflowStatus,
+              index === WORKFLOW_STEPS.length - 1
+            );
+
+            const isCompleted = stepStatus === 'completed';
+            const isCurrent = stepStatus === 'current';
+            const isFailed = stepStatus === 'failed';
+            const isPending = stepStatus === 'pending';
 
             return (
               <div key={step.id} className="flex items-start gap-4">
@@ -140,6 +150,8 @@ export default function WorkflowStatus({ application }: WorkflowStatusProps) {
                         ? 'bg-green-500 border-green-500'
                         : isCurrent
                         ? 'bg-blue-500 border-blue-500 animate-pulse'
+                        : isFailed
+                        ? 'bg-red-500 border-red-500'
                         : 'bg-white border-slate-300'
                     }`}
                   >
@@ -147,6 +159,8 @@ export default function WorkflowStatus({ application }: WorkflowStatusProps) {
                       <CheckCircle2 className="w-5 h-5 text-white" />
                     ) : isCurrent ? (
                       <Loader2 className="w-5 h-5 text-white animate-spin" />
+                    ) : isFailed ? (
+                      <XCircle className="w-5 h-5 text-white" />
                     ) : (
                       <Circle className="w-5 h-5 text-slate-300" />
                     )}
@@ -166,13 +180,19 @@ export default function WorkflowStatus({ application }: WorkflowStatusProps) {
                         ? 'text-green-700'
                         : isCurrent
                         ? 'text-blue-700'
+                        : isFailed
+                        ? 'text-red-700'
                         : 'text-slate-400'
                     }`}
                   >
                     {step.label}
                   </p>
-                  {isCurrent && <p className="text-xs text-blue-600 mt-0.5">In progress...</p>}
-                  {isCompleted && <p className="text-xs text-green-600 mt-0.5">Completed</p>}
+                  <div className="text-xs mt-0.5">
+                    {isCompleted && <p className="text-green-600">✓ Completed</p>}
+                    {isCurrent && <p className="text-blue-600">● In progress...</p>}
+                    {isFailed && <p className="text-red-600">✕ Failed</p>}
+                    {isPending && <p className="text-slate-400">○ Pending</p>}
+                  </div>
                 </div>
               </div>
             );

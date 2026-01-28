@@ -50,6 +50,7 @@ export async function GET(request: NextRequest) {
           fraudSignals: true,
           createdAt: true,
           updatedAt: true,
+          lastCompletedStep: true,
           listing: {
             select: {
               id: true,

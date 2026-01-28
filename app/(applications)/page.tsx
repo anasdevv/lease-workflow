@@ -1,19 +1,18 @@
 'use client';
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Shield, Search, Filter, Users, Clock, CheckCircle, Loader2, Plus } from "lucide-react";
-import { toast } from "sonner";
 import AdminApplicationCard from '@/components/application/application-card';
-import { useApplications, useApplicationStats, useUpdateApplicationStatus } from '@/hooks/use-applications';
-import { useDebounce } from '@/hooks/use-debounce';
 import ApplicationStats from '@/components/application/application-stats';
 import { NewApplicationModal } from '@/components/application/new-application-modal';
-import { getAllListings } from '@/actions/application/action';
-import type { Listing } from '@/types';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useApplications, useApplicationStats, useUpdateApplicationStatus } from '@/hooks/use-applications';
+import { useDebounce } from '@/hooks/use-debounce';
 import { useListings } from '@/hooks/use-listings';
+import { useNewlyCreatedApplicationsPolling } from '@/hooks/use-newly-created-applications';
+import type { Listing } from '@/types';
+import { Filter, Loader2, Plus, Search, Shield } from "lucide-react";
+import { useCallback, useState } from 'react';
+import { toast } from "sonner";
 
 export default function AdminLeaseReview() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -24,34 +23,29 @@ export default function AdminLeaseReview() {
     const {data: listings , isLoading: listingsLoading} = useListings();
     
 
-
     const debouncedSearch = useDebounce(searchQuery, 300);
-
 
     const { data: statsData, isLoading: statsLoading } = useApplicationStats();
 
-    const { data, isLoading, error } = useApplications({
+    const { data, isLoading, error , refetch } = useApplications({
         searchQuery: debouncedSearch,
         status: statusFilter,
         riskLevel: riskFilter, page,
     });
 
-    const updateStatus = useUpdateApplicationStatus();
+    const { trackedAppIds, trackApplication } = useNewlyCreatedApplicationsPolling();
+
 
     const applications = data?.data || [];
     const pagination = data?.pagination;
 
-    const handleUpdateStatus = async (appId: number, newStatus: string, notes: string) => {
-        try {
-            await updateStatus.mutateAsync({ appId, status: newStatus, notes });
-            toast.success(`Application ${newStatus}`);
-        } catch (error) {
-            toast.error('Failed to update status');
-        }
-    };
-    const closeModal = useCallback(() => {
-        setShowNewApplicationModal(false);
-    },[])
+    const handleApplicationCreated = useCallback((applicationId: number) => {
+                refetch();
+        trackApplication(applicationId);
+        toast.success('Application created! Monitoring for updates...');
+    }, [trackApplication]);
+
+  
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-slate-50">
@@ -178,7 +172,7 @@ export default function AdminLeaseReview() {
                                         <AdminApplicationCard
                                             key={app.id}
                                             application={app}
-                                            onUpdateStatus={handleUpdateStatus}
+                                            shouldPoll={trackedAppIds.includes(app.id)}
                                         />
                                     ))}
 
@@ -214,6 +208,7 @@ export default function AdminLeaseReview() {
                         open={showNewApplicationModal}
                         onOpenChange={setShowNewApplicationModal}
                         listings={listings as Listing[]}
+                        onApplicationCreated={handleApplicationCreated}
                     />
                 )}
             </div>

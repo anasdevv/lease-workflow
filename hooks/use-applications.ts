@@ -1,16 +1,37 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getApplicationStats, searchApplications, updateApplicationStatus, type SearchApplicationsParams } from '@/lib/api/applications';
+import { getApplicationDetails, getApplicationStats, searchApplications, updateApplicationStatus, type SearchApplicationsParams } from '@/lib/api/applications';
 
 export enum ApplicationQueryTag{
     APPLICATIONS = 'applications',
     APPLICATION_STATS = 'applicationStats',
+    APPLICATION_DETAILS = 'applicationDetails',
 }
 
+/**
+ * Fetch applications list with search/filters
+ * Does NOT poll - newly created applications are polled separately via useNewlyCreatedApplicationsPolling
+ */
 export function useApplications(params: SearchApplicationsParams) {
   return useQuery({
     queryKey: [ApplicationQueryTag.APPLICATIONS, params],
     queryFn: () => searchApplications(params),
-    staleTime: 30 * 1000, 
+    staleTime: 60 * 1000, // Keep data fresh for 1 minute
+  });
+}
+
+/**
+ * Hook for fetching individual application details
+ * Used when viewing a specific application and needing full details
+ * Does NOT poll - use useNewlyCreatedApplicationsPolling for polling
+ */
+export function useApplicationDetails(applicationId: number | null,shouldPoll: boolean) {
+  return useQuery({
+    queryKey: [ApplicationQueryTag.APPLICATION_DETAILS, applicationId],
+    queryFn: () => getApplicationDetails(applicationId!),
+    enabled: shouldPoll,
+    staleTime: 30 * 1000,
+    refetchOnWindowFocus: false,
+    refetchInterval : () => shouldPoll ? 1000 : false,
   });
 }
 

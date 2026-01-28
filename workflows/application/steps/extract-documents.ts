@@ -32,7 +32,7 @@ export async function extractDocumentsStep(
   console.log(
     `[Extract Documents] Fetched ${appDocs.length} documents for application ${applicationId}` , JSON.stringify(appDocs,null,4)
   );
-
+console.log('appDocs type:',  appDocs);
   // Process all documents in parallel
   const extractions = await Promise.all(
     appDocs.map(async (appDoc: any) => {
@@ -40,7 +40,8 @@ export async function extractDocumentsStep(
         // Call AI to extract structured data
         const extracted = await analyzeDocument(
           appDoc.document.blobUrl,
-          appDoc.documentType
+          appDoc.documentType,
+          appDoc?.document?.filename
         );
 
         // Update document via API (outside workflow bundle)

@@ -16,6 +16,7 @@ interface NewApplicationModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   listings: Listing[];
+  onApplicationCreated?: (applicationId: number) => void;
 }
 
 function FormSkeleton() {
@@ -32,6 +33,7 @@ export function NewApplicationModal({
   open,
   onOpenChange,
   listings,
+  onApplicationCreated,
 }: NewApplicationModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -43,7 +45,7 @@ export function NewApplicationModal({
           </DialogDescription>
         </DialogHeader>
         <Suspense fallback={<FormSkeleton />}>
-          <ApplicationForm listings={listings} onSuccess={() => onOpenChange(false)}/>
+          <ApplicationForm listings={listings} onSuccess={() => onOpenChange(false)} onApplicationCreated={onApplicationCreated}/>
         </Suspense>
       </DialogContent>
     </Dialog>

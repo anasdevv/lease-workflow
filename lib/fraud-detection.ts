@@ -30,8 +30,7 @@ export function performFraudCheck(
   const payStub = documents.find((d) => d.documentType === 'pay_stub');
   const taxReturn = documents.find((d) => d.documentType === 'tax_return');
   const idVerification = documents.find((d) => d.documentType === 'id_verification');
-
-  // Check 1: Income consistency between pay stub and tax return
+  console.log('Performing fraud check on documents:', documents);
   if (
     payStub?.data &&
     typeof payStub.data === 'object' &&
@@ -53,11 +52,10 @@ export function performFraudCheck(
         severity: 'high',
         details: `Pay stub shows $${monthlyFromPayStub}/month, but tax return shows $${monthlyFromTaxReturn.toFixed(0)}/month`,
       });
-      score += 60; // Major red flag
+      score += 60; 
     }
   }
 
-  // Check 2: Low confidence scores
   const avgConfidence =
     documents.reduce((sum, d) => sum + (d.confidence || 0), 0) /
     (documents.length || 1);
@@ -71,7 +69,6 @@ export function performFraudCheck(
     score += 30;
   }
 
-  // Check 3: Missing critical data
   if (
     !payStub?.data ||
     typeof payStub.data !== 'object' ||
@@ -85,7 +82,6 @@ export function performFraudCheck(
     score += 20;
   }
 
-  // Check 4: Suspicious income (too high or too low)
   if (
     payStub?.data &&
     typeof payStub.data === 'object' &&
@@ -110,7 +106,6 @@ export function performFraudCheck(
     }
   }
 
-  // Check 5: ID verification present
   if (!idVerification) {
     signals.push({
       type: 'missing_id_verification',

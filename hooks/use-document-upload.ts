@@ -3,6 +3,7 @@ import { upload } from '@vercel/blob/client';
 import { toast } from 'sonner';
 import type { UploadedDocumentUI } from '@/types';
 import { ACCEPTED_FILE_TYPES, MAX_FILE_SIZE } from '@/constants/documents';
+import { uuid } from 'zod';
 
 interface UseDocumentUploadReturn {
   documents: UploadedDocumentUI[];
@@ -51,6 +52,7 @@ export function useDocumentUpload(): UseDocumentUploadReturn {
       });
 
       const newDocument: UploadedDocumentUI = {
+        id : crypto.randomUUID(),
         documentType,
         filename: file.name,
         fileUrl: blob.url,

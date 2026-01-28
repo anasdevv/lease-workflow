@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider        = "prisma-client"
   output          = "../generated/prisma"
@@ -25,68 +19,70 @@ model Listing {
 }
 
 model Application {
-  id             Int      @id @default(autoincrement())
-  applicantName  String
-  applicantEmail String
-  listingId      Int
-  listing        Listing  @relation(fields: [listingId], references: [id])
-  status         String   @default("draft") // draft, submitted, processing, approved, rejected
-  workflowRunId  String?
-  workflowStatus String? // running, paused_for_review, completed, failed
-  fraudScore     Float?
-  fraudSignals   Json?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
-  documents       ApplicationDocument[]
-  reviewDecisions HumanReviewDecision[]
+  id                    Int                   @id @default(autoincrement())
+  applicantName         String
+  applicantEmail        String
+  listingId             Int
+  status                String                @default("draft")
+  workflowRunId         String?
+  workflowStatus        String?
+  lastCompletedStep     String?
+  workflowErrorDetails  Json?
+  fraudScore            Float?
+  fraudSignals          Json?
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  listing               Listing               @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  documents             ApplicationDocument[]
+  reviewDecisions       HumanReviewDecision[]
 
   @@index([listingId])
   @@index([applicantEmail])
   @@index([applicantName])
   @@index([status])
   @@index([fraudScore])
-}
-
-model Document {
-  id         Int      @id @default(autoincrement())
-  blobUrl    String
-  filename   String
-  fileSize   Int
-  mimeType   String
-  uploadedAt DateTime @default(now())
-  status     String   @default("uploaded")
-
-  applicationDocuments ApplicationDocument[]
+  @@index([workflowStatus])
 }
 
 model ApplicationDocument {
-  id                 Int       @id @default(autoincrement())
   applicationId      Int
-  documentId         Int
-  documentType       String // pay_stub, tax_return, id_verification
-  verificationStatus String    @default("pending") // pending, extracted, verified, failed
+  documentType       String
+  verificationStatus String      @default("pending")
   aiExtractedData    Json?
   confidenceScore    Float?
   workflowStepId     String?
-  extractedAt        DateTime?
-
-  application Application @relation(fields: [applicationId], references: [id])
-  document    Document    @relation(fields: [documentId], references: [id])
+  id                 Int         @id @default(autoincrement())
+  documentId         Int
+  application        Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  document           Document    @relation(fields: [documentId], references: [id], onDelete: Cascade)
 
   @@unique([applicationId, documentId])
+  @@index([applicationId])
+  @@index([documentId])
 }
 
 model HumanReviewDecision {
-  id            Int       @id @default(autoincrement())
   applicationId Int
   workflowRunId String
-  decision      String? // approve, reject
-  reason        String?
+  decision      String?     @default("")  
+  reason        String?      @default("")
   fraudContext  Json?
-  status        String    @default("pending") // pending, completed
+  status        String      @default("pending")
   reviewedAt    DateTime?
-  createdAt     DateTime  @default(now())
+  createdAt     DateTime    @default(now())
+  id            Int         @id @default(autoincrement())
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
 
-  application Application @relation(fields: [applicationId], references: [id])
+  @@index([applicationId])
+}
+
+model Document {
+  blobUrl              String
+  filename             String
+  fileSize             Int
+  mimeType             String
+  uploadedAt           DateTime              @default(now())
+  status               String                @default("uploaded")
+  id                   Int                   @id @default(autoincrement())
+  applicationDocuments ApplicationDocument[]
 }

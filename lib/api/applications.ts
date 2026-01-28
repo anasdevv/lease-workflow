@@ -1,4 +1,5 @@
-import type { ApiPaginatedResponse, ApiResponse, Application, ApplicationStats, Listing } from '@/types';
+import { ApplicationDocumentWithDocument } from '@/generated/prisma/client';
+import type { ApiPaginatedResponse, ApiResponse, Application, ApplicationDocument, ApplicationStats, HumanReviewDecision, Listing } from '@/types';
 
 
 
@@ -64,4 +65,18 @@ export async function updateApplicationStatus(
   }
 
   return response.json();
+}
+
+
+
+export async function getApplicationDetails(
+  applicationId: number
+): Promise<Application & { documents : ApplicationDocumentWithDocument[], listing: Listing  , reviewDecisions : HumanReviewDecision[]}> {
+  const response = await fetch(`/api/applications/${applicationId}`);
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch application details');
+  }
+  
+  return response.json().then((pd) => pd.data);
 }

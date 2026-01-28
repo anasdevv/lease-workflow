@@ -1,11 +1,17 @@
-import { humanReviewHook } from '@/app/hooks/human-review';
 import { fetch } from 'workflow';
 import { getInternalApiHeaders } from '@/lib/workflow-api';
+
+interface HumanReviewEvent {
+  reviewId: number;
+  decision: 'approved' | 'rejected';
+  reason?: string;
+}
 
 interface AwaitHumanDecisionInput {
   applicationId: number;
   path: 'manual_review' | 'auto_approve';
   workflowRunId: string;
+  humanReviewHook: any; // Hook type from workflow
 }
 
 interface AwaitHumanDecisionOutput {
@@ -18,11 +24,9 @@ export async function awaitHumanDecisionStep(
   input: AwaitHumanDecisionInput
 ): Promise<AwaitHumanDecisionOutput> {
   'use step';
-
-  const { applicationId, path, workflowRunId } = input;
+  const { applicationId, path, workflowRunId, humanReviewHook } = input;
 
   if (path !== 'manual_review') {
-    // Skip this step if auto-approve path
     console.log(
       `[Await Human Decision] Skipping for auto-approve path (application ${applicationId})`
     );
@@ -36,7 +40,6 @@ export async function awaitHumanDecisionStep(
     `[Await Human Decision] Waiting for human decision on application ${applicationId}`
   );
 
-  // Check if review decision exists via API
   const existingResponse = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/internal/applications/${applicationId}/review-decision`,
     {
@@ -60,7 +63,7 @@ export async function awaitHumanDecisionStep(
     );
   }
 
-  // Wait for human review decision via hook
+  // Wait for human review decision via hook events
   const reviewEvents = humanReviewHook.create({
     token: `app-${applicationId}`,
   });

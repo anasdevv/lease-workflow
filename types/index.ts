@@ -29,7 +29,7 @@ export interface ApplicationFormData {
 }
 
 export interface UploadedDocumentUI {
-  id?: string;
+  id: string;
   documentType: string;
   filename: string;
   fileUrl: string;

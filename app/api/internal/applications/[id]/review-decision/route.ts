@@ -61,6 +61,13 @@ export async function POST(
         applicationId,
         ...data,
       },
+      select : {
+        id: true,
+        applicationId: true,
+        decision: true,
+        reason: true,
+        // reviewedAt: true
+      }
     });
 
     return NextResponse.json(review);
@@ -95,6 +102,12 @@ export async function PATCH(
     // Find the review decision first
     const existingReview = await prisma.humanReviewDecision.findFirst({
       where: { applicationId },
+      select : {
+        id: true,
+        applicationId: true,
+        decision: true,
+        reason: true,
+      }
     });
 
     if (!existingReview) {
@@ -110,6 +123,9 @@ export async function PATCH(
         ...data,
         reviewedAt: new Date(),
       },
+      select : {
+        id: true,
+      }
     });
 
     return NextResponse.json(updated);

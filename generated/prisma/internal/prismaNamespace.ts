@@ -386,9 +386,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Listing: 'Listing',
   Application: 'Application',
-  Document: 'Document',
   ApplicationDocument: 'ApplicationDocument',
-  HumanReviewDecision: 'HumanReviewDecision'
+  HumanReviewDecision: 'HumanReviewDecision',
+  Document: 'Document'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "listing" | "application" | "document" | "applicationDocument" | "humanReviewDecision"
+    modelProps: "listing" | "application" | "applicationDocument" | "humanReviewDecision" | "document"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -556,80 +556,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Document: {
-      payload: Prisma.$DocumentPayload<ExtArgs>
-      fields: Prisma.DocumentFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.DocumentFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.DocumentFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
-        }
-        findFirst: {
-          args: Prisma.DocumentFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.DocumentFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
-        }
-        findMany: {
-          args: Prisma.DocumentFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>[]
-        }
-        create: {
-          args: Prisma.DocumentCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
-        }
-        createMany: {
-          args: Prisma.DocumentCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.DocumentCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>[]
-        }
-        delete: {
-          args: Prisma.DocumentDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
-        }
-        update: {
-          args: Prisma.DocumentUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
-        }
-        deleteMany: {
-          args: Prisma.DocumentDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.DocumentUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.DocumentUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>[]
-        }
-        upsert: {
-          args: Prisma.DocumentUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
-        }
-        aggregate: {
-          args: Prisma.DocumentAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateDocument>
-        }
-        groupBy: {
-          args: Prisma.DocumentGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DocumentGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.DocumentCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DocumentCountAggregateOutputType> | number
-        }
-      }
-    }
     ApplicationDocument: {
       payload: Prisma.$ApplicationDocumentPayload<ExtArgs>
       fields: Prisma.ApplicationDocumentFieldRefs
@@ -778,6 +704,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Document: {
+      payload: Prisma.$DocumentPayload<ExtArgs>
+      fields: Prisma.DocumentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DocumentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DocumentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        findFirst: {
+          args: Prisma.DocumentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DocumentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        findMany: {
+          args: Prisma.DocumentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>[]
+        }
+        create: {
+          args: Prisma.DocumentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        createMany: {
+          args: Prisma.DocumentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DocumentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>[]
+        }
+        delete: {
+          args: Prisma.DocumentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        update: {
+          args: Prisma.DocumentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        deleteMany: {
+          args: Prisma.DocumentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DocumentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DocumentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>[]
+        }
+        upsert: {
+          args: Prisma.DocumentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DocumentPayload>
+        }
+        aggregate: {
+          args: Prisma.DocumentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDocument>
+        }
+        groupBy: {
+          args: Prisma.DocumentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DocumentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DocumentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -843,6 +843,8 @@ export const ApplicationScalarFieldEnum = {
   status: 'status',
   workflowRunId: 'workflowRunId',
   workflowStatus: 'workflowStatus',
+  lastCompletedStep: 'lastCompletedStep',
+  workflowErrorDetails: 'workflowErrorDetails',
   fraudScore: 'fraudScore',
   fraudSignals: 'fraudSignals',
   createdAt: 'createdAt',
@@ -852,36 +854,21 @@ export const ApplicationScalarFieldEnum = {
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
 
 
-export const DocumentScalarFieldEnum = {
-  id: 'id',
-  blobUrl: 'blobUrl',
-  filename: 'filename',
-  fileSize: 'fileSize',
-  mimeType: 'mimeType',
-  uploadedAt: 'uploadedAt',
-  status: 'status'
-} as const
-
-export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
-
-
 export const ApplicationDocumentScalarFieldEnum = {
-  id: 'id',
   applicationId: 'applicationId',
-  documentId: 'documentId',
   documentType: 'documentType',
   verificationStatus: 'verificationStatus',
   aiExtractedData: 'aiExtractedData',
   confidenceScore: 'confidenceScore',
   workflowStepId: 'workflowStepId',
-  extractedAt: 'extractedAt'
+  id: 'id',
+  documentId: 'documentId'
 } as const
 
 export type ApplicationDocumentScalarFieldEnum = (typeof ApplicationDocumentScalarFieldEnum)[keyof typeof ApplicationDocumentScalarFieldEnum]
 
 
 export const HumanReviewDecisionScalarFieldEnum = {
-  id: 'id',
   applicationId: 'applicationId',
   workflowRunId: 'workflowRunId',
   decision: 'decision',
@@ -889,10 +876,24 @@ export const HumanReviewDecisionScalarFieldEnum = {
   fraudContext: 'fraudContext',
   status: 'status',
   reviewedAt: 'reviewedAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  id: 'id'
 } as const
 
 export type HumanReviewDecisionScalarFieldEnum = (typeof HumanReviewDecisionScalarFieldEnum)[keyof typeof HumanReviewDecisionScalarFieldEnum]
+
+
+export const DocumentScalarFieldEnum = {
+  blobUrl: 'blobUrl',
+  filename: 'filename',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  uploadedAt: 'uploadedAt',
+  status: 'status',
+  id: 'id'
+} as const
+
+export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -985,20 +986,6 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -1009,6 +996,20 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -1108,9 +1109,9 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   listing?: Prisma.ListingOmit
   application?: Prisma.ApplicationOmit
-  document?: Prisma.DocumentOmit
   applicationDocument?: Prisma.ApplicationDocumentOmit
   humanReviewDecision?: Prisma.HumanReviewDecisionOmit
+  document?: Prisma.DocumentOmit
 }
 
 /* Types for Logging */

@@ -46,6 +46,7 @@ export type ApplicationMinAggregateOutputType = {
   status: string | null
   workflowRunId: string | null
   workflowStatus: string | null
+  lastCompletedStep: string | null
   fraudScore: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -59,6 +60,7 @@ export type ApplicationMaxAggregateOutputType = {
   status: string | null
   workflowRunId: string | null
   workflowStatus: string | null
+  lastCompletedStep: string | null
   fraudScore: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -72,6 +74,8 @@ export type ApplicationCountAggregateOutputType = {
   status: number
   workflowRunId: number
   workflowStatus: number
+  lastCompletedStep: number
+  workflowErrorDetails: number
   fraudScore: number
   fraudSignals: number
   createdAt: number
@@ -100,6 +104,7 @@ export type ApplicationMinAggregateInputType = {
   status?: true
   workflowRunId?: true
   workflowStatus?: true
+  lastCompletedStep?: true
   fraudScore?: true
   createdAt?: true
   updatedAt?: true
@@ -113,6 +118,7 @@ export type ApplicationMaxAggregateInputType = {
   status?: true
   workflowRunId?: true
   workflowStatus?: true
+  lastCompletedStep?: true
   fraudScore?: true
   createdAt?: true
   updatedAt?: true
@@ -126,6 +132,8 @@ export type ApplicationCountAggregateInputType = {
   status?: true
   workflowRunId?: true
   workflowStatus?: true
+  lastCompletedStep?: true
+  workflowErrorDetails?: true
   fraudScore?: true
   fraudSignals?: true
   createdAt?: true
@@ -227,6 +235,8 @@ export type ApplicationGroupByOutputType = {
   status: string
   workflowRunId: string | null
   workflowStatus: string | null
+  lastCompletedStep: string | null
+  workflowErrorDetails: runtime.JsonValue | null
   fraudScore: number | null
   fraudSignals: runtime.JsonValue | null
   createdAt: Date
@@ -264,6 +274,8 @@ export type ApplicationWhereInput = {
   status?: Prisma.StringFilter<"Application"> | string
   workflowRunId?: Prisma.StringNullableFilter<"Application"> | string | null
   workflowStatus?: Prisma.StringNullableFilter<"Application"> | string | null
+  lastCompletedStep?: Prisma.StringNullableFilter<"Application"> | string | null
+  workflowErrorDetails?: Prisma.JsonNullableFilter<"Application">
   fraudScore?: Prisma.FloatNullableFilter<"Application"> | number | null
   fraudSignals?: Prisma.JsonNullableFilter<"Application">
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
@@ -281,6 +293,8 @@ export type ApplicationOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   workflowRunId?: Prisma.SortOrderInput | Prisma.SortOrder
   workflowStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastCompletedStep?: Prisma.SortOrderInput | Prisma.SortOrder
+  workflowErrorDetails?: Prisma.SortOrderInput | Prisma.SortOrder
   fraudScore?: Prisma.SortOrderInput | Prisma.SortOrder
   fraudSignals?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -301,6 +315,8 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.StringFilter<"Application"> | string
   workflowRunId?: Prisma.StringNullableFilter<"Application"> | string | null
   workflowStatus?: Prisma.StringNullableFilter<"Application"> | string | null
+  lastCompletedStep?: Prisma.StringNullableFilter<"Application"> | string | null
+  workflowErrorDetails?: Prisma.JsonNullableFilter<"Application">
   fraudScore?: Prisma.FloatNullableFilter<"Application"> | number | null
   fraudSignals?: Prisma.JsonNullableFilter<"Application">
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
@@ -318,6 +334,8 @@ export type ApplicationOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   workflowRunId?: Prisma.SortOrderInput | Prisma.SortOrder
   workflowStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastCompletedStep?: Prisma.SortOrderInput | Prisma.SortOrder
+  workflowErrorDetails?: Prisma.SortOrderInput | Prisma.SortOrder
   fraudScore?: Prisma.SortOrderInput | Prisma.SortOrder
   fraudSignals?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -340,6 +358,8 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   status?: Prisma.StringWithAggregatesFilter<"Application"> | string
   workflowRunId?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   workflowStatus?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  lastCompletedStep?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  workflowErrorDetails?: Prisma.JsonNullableWithAggregatesFilter<"Application">
   fraudScore?: Prisma.FloatNullableWithAggregatesFilter<"Application"> | number | null
   fraudSignals?: Prisma.JsonNullableWithAggregatesFilter<"Application">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
@@ -352,6 +372,8 @@ export type ApplicationCreateInput = {
   status?: string
   workflowRunId?: string | null
   workflowStatus?: string | null
+  lastCompletedStep?: string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -369,6 +391,8 @@ export type ApplicationUncheckedCreateInput = {
   status?: string
   workflowRunId?: string | null
   workflowStatus?: string | null
+  lastCompletedStep?: string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -383,6 +407,8 @@ export type ApplicationUpdateInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -400,6 +426,8 @@ export type ApplicationUncheckedUpdateInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -416,6 +444,8 @@ export type ApplicationCreateManyInput = {
   status?: string
   workflowRunId?: string | null
   workflowStatus?: string | null
+  lastCompletedStep?: string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -428,6 +458,8 @@ export type ApplicationUpdateManyMutationInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -442,6 +474,8 @@ export type ApplicationUncheckedUpdateManyInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -466,6 +500,8 @@ export type ApplicationCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   workflowRunId?: Prisma.SortOrder
   workflowStatus?: Prisma.SortOrder
+  lastCompletedStep?: Prisma.SortOrder
+  workflowErrorDetails?: Prisma.SortOrder
   fraudScore?: Prisma.SortOrder
   fraudSignals?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -486,6 +522,7 @@ export type ApplicationMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   workflowRunId?: Prisma.SortOrder
   workflowStatus?: Prisma.SortOrder
+  lastCompletedStep?: Prisma.SortOrder
   fraudScore?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -499,6 +536,7 @@ export type ApplicationMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   workflowRunId?: Prisma.SortOrder
   workflowStatus?: Prisma.SortOrder
+  lastCompletedStep?: Prisma.SortOrder
   fraudScore?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -603,6 +641,8 @@ export type ApplicationCreateWithoutListingInput = {
   status?: string
   workflowRunId?: string | null
   workflowStatus?: string | null
+  lastCompletedStep?: string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -618,6 +658,8 @@ export type ApplicationUncheckedCreateWithoutListingInput = {
   status?: string
   workflowRunId?: string | null
   workflowStatus?: string | null
+  lastCompletedStep?: string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -663,6 +705,8 @@ export type ApplicationScalarWhereInput = {
   status?: Prisma.StringFilter<"Application"> | string
   workflowRunId?: Prisma.StringNullableFilter<"Application"> | string | null
   workflowStatus?: Prisma.StringNullableFilter<"Application"> | string | null
+  lastCompletedStep?: Prisma.StringNullableFilter<"Application"> | string | null
+  workflowErrorDetails?: Prisma.JsonNullableFilter<"Application">
   fraudScore?: Prisma.FloatNullableFilter<"Application"> | number | null
   fraudSignals?: Prisma.JsonNullableFilter<"Application">
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
@@ -675,6 +719,8 @@ export type ApplicationCreateWithoutDocumentsInput = {
   status?: string
   workflowRunId?: string | null
   workflowStatus?: string | null
+  lastCompletedStep?: string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -691,6 +737,8 @@ export type ApplicationUncheckedCreateWithoutDocumentsInput = {
   status?: string
   workflowRunId?: string | null
   workflowStatus?: string | null
+  lastCompletedStep?: string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -720,6 +768,8 @@ export type ApplicationUpdateWithoutDocumentsInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -736,6 +786,8 @@ export type ApplicationUncheckedUpdateWithoutDocumentsInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -749,6 +801,8 @@ export type ApplicationCreateWithoutReviewDecisionsInput = {
   status?: string
   workflowRunId?: string | null
   workflowStatus?: string | null
+  lastCompletedStep?: string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -765,6 +819,8 @@ export type ApplicationUncheckedCreateWithoutReviewDecisionsInput = {
   status?: string
   workflowRunId?: string | null
   workflowStatus?: string | null
+  lastCompletedStep?: string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -794,6 +850,8 @@ export type ApplicationUpdateWithoutReviewDecisionsInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -810,6 +868,8 @@ export type ApplicationUncheckedUpdateWithoutReviewDecisionsInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -824,6 +884,8 @@ export type ApplicationCreateManyListingInput = {
   status?: string
   workflowRunId?: string | null
   workflowStatus?: string | null
+  lastCompletedStep?: string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -836,6 +898,8 @@ export type ApplicationUpdateWithoutListingInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -851,6 +915,8 @@ export type ApplicationUncheckedUpdateWithoutListingInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -866,6 +932,8 @@ export type ApplicationUncheckedUpdateManyWithoutListingInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   workflowRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflowStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCompletedStep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflowErrorDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   fraudScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   fraudSignals?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -920,6 +988,8 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   status?: boolean
   workflowRunId?: boolean
   workflowStatus?: boolean
+  lastCompletedStep?: boolean
+  workflowErrorDetails?: boolean
   fraudScore?: boolean
   fraudSignals?: boolean
   createdAt?: boolean
@@ -938,6 +1008,8 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   status?: boolean
   workflowRunId?: boolean
   workflowStatus?: boolean
+  lastCompletedStep?: boolean
+  workflowErrorDetails?: boolean
   fraudScore?: boolean
   fraudSignals?: boolean
   createdAt?: boolean
@@ -953,6 +1025,8 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   status?: boolean
   workflowRunId?: boolean
   workflowStatus?: boolean
+  lastCompletedStep?: boolean
+  workflowErrorDetails?: boolean
   fraudScore?: boolean
   fraudSignals?: boolean
   createdAt?: boolean
@@ -968,13 +1042,15 @@ export type ApplicationSelectScalar = {
   status?: boolean
   workflowRunId?: boolean
   workflowStatus?: boolean
+  lastCompletedStep?: boolean
+  workflowErrorDetails?: boolean
   fraudScore?: boolean
   fraudSignals?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicantName" | "applicantEmail" | "listingId" | "status" | "workflowRunId" | "workflowStatus" | "fraudScore" | "fraudSignals" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicantName" | "applicantEmail" | "listingId" | "status" | "workflowRunId" | "workflowStatus" | "lastCompletedStep" | "workflowErrorDetails" | "fraudScore" | "fraudSignals" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   listing?: boolean | Prisma.ListingDefaultArgs<ExtArgs>
   documents?: boolean | Prisma.Application$documentsArgs<ExtArgs>
@@ -1003,6 +1079,8 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     status: string
     workflowRunId: string | null
     workflowStatus: string | null
+    lastCompletedStep: string | null
+    workflowErrorDetails: runtime.JsonValue | null
     fraudScore: number | null
     fraudSignals: runtime.JsonValue | null
     createdAt: Date
@@ -1440,6 +1518,8 @@ export interface ApplicationFieldRefs {
   readonly status: Prisma.FieldRef<"Application", 'String'>
   readonly workflowRunId: Prisma.FieldRef<"Application", 'String'>
   readonly workflowStatus: Prisma.FieldRef<"Application", 'String'>
+  readonly lastCompletedStep: Prisma.FieldRef<"Application", 'String'>
+  readonly workflowErrorDetails: Prisma.FieldRef<"Application", 'Json'>
   readonly fraudScore: Prisma.FieldRef<"Application", 'Float'>
   readonly fraudSignals: Prisma.FieldRef<"Application", 'Json'>
   readonly createdAt: Prisma.FieldRef<"Application", 'DateTime'>
