@@ -38,6 +38,7 @@ interface AdminApplicationCardProps {
     newStatus: string,
   ) => void;
   shouldPoll?: boolean;
+  onRemoveTracking?: (applicationId: number) => void;
 }
 
 
@@ -45,6 +46,7 @@ export default function AdminApplicationCard({
   application,
   onUpdateStatus,
   shouldPoll,
+  onRemoveTracking,
 }: AdminApplicationCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [reviewNotes, setReviewNotes] = useState('');
@@ -52,10 +54,10 @@ export default function AdminApplicationCard({
   console.log('AdminApplicationCard - shouldPoll:', shouldPoll);
   const { isLoading, data: applicationDetails } = useApplicationDetails(
     application.id,
-    isExpanded && (shouldPoll ?? false)
+    isExpanded,
+    shouldPoll ?? false,
   );
 
-  const { removeTrackedApplication } = useNewlyCreatedApplicationsPolling();
 
   const currentApplication = applicationDetails || application;
   const status = STATUS_CONFIG[currentApplication.status as keyof typeof STATUS_CONFIG] || STATUS_CONFIG.draft;
@@ -93,11 +95,11 @@ export default function AdminApplicationCard({
 
   useEffect(() => {
     if (currentApplication.status === 'completed' || currentApplication.workflowStatus === 'completed' || currentApplication.status === 'rejected' || currentApplication.workflowStatus === 'failed') {
-      removeTrackedApplication(currentApplication.id);
+      console.log('Application completed/failed/rejected, removing from tracking:', currentApplication.id);
+      onRemoveTracking?.(currentApplication.id);
     }
 
-  }, [])
-
+  }, [currentApplication.status, currentApplication.workflowStatus, currentApplication.id, onRemoveTracking]);
 
   const fraudScore = currentApplication.fraudScore ?? null;
   return (

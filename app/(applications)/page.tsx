@@ -33,7 +33,7 @@ export default function AdminLeaseReview() {
         riskLevel: riskFilter, page,
     });
 
-    const { trackedAppIds, trackApplication } = useNewlyCreatedApplicationsPolling();
+    const { trackedAppIds, trackApplication , removeTrackedApplication } = useNewlyCreatedApplicationsPolling();
 
 
     const applications = data?.data || [];
@@ -44,8 +44,12 @@ export default function AdminLeaseReview() {
         trackApplication(applicationId);
         toast.success('Application created! Monitoring for updates...');
     }, [trackApplication]);
-
+    console.log('Tracked Application IDs for Polling:', trackedAppIds);
   
+const handleRemoveTracking = useCallback((applicationId: number) => {
+        removeTrackedApplication(applicationId);
+        console.log('Stopped tracking application ID:', applicationId);
+    }, [removeTrackedApplication]);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-slate-50">
@@ -173,6 +177,7 @@ export default function AdminLeaseReview() {
                                             key={app.id}
                                             application={app}
                                             shouldPoll={trackedAppIds.includes(app.id)}
+                                            onRemoveTracking={handleRemoveTracking}
                                         />
                                     ))}
 

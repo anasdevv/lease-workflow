@@ -24,14 +24,14 @@ export function useApplications(params: SearchApplicationsParams) {
  * Used when viewing a specific application and needing full details
  * Does NOT poll - use useNewlyCreatedApplicationsPolling for polling
  */
-export function useApplicationDetails(applicationId: number | null,shouldPoll: boolean) {
+export function useApplicationDetails(applicationId: number | null,  enabled : boolean,shouldPoll: boolean ,) {
   return useQuery({
     queryKey: [ApplicationQueryTag.APPLICATION_DETAILS, applicationId],
     queryFn: () => getApplicationDetails(applicationId!),
-    enabled: shouldPoll,
+    enabled,
     staleTime: 30 * 1000,
     refetchOnWindowFocus: false,
-    refetchInterval : () => shouldPoll ? 1000 : false,
+    refetchInterval: (data) => shouldPoll ? 1000 : false,
   });
 }
 

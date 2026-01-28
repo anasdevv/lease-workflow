@@ -52,7 +52,7 @@ export default function ApplicationForm({ listings, onSuccess, onApplicationCrea
     const form = useForm<ApplicationFormValues>({
         resolver: zodResolver(applicationFormSchema),
         defaultValues: {
-            listingId: -1,
+            listingId: 0,
             applicantName: '',
             applicantEmail: '',
         },

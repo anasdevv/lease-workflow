@@ -55,6 +55,9 @@ function getStepStatus(
   workflowStatus: WorkflowStatusType | null,
   isLastStep: boolean
 ): StepStatus {
+  if(workflowStatus === 'completed') {
+    return 'completed';
+  }
   // If this step is completed
   if (stepNumber <= lastCompletedStepNumber) {
     return 'completed';

@@ -11,7 +11,6 @@ const STORAGE_KEY = 'newly_created_applications_tracked_ids';
  */
 export function useNewlyCreatedApplicationsPolling() {
   const [trackedAppIds, setTrackedAppIds] = useState<number[]>([]);
-    console.log('Before removal, trackedAppIds:', trackedAppIds);
 
   // Initialize from localStorage
   useEffect(() => {
@@ -50,8 +49,11 @@ export function useNewlyCreatedApplicationsPolling() {
   // Remove an application ID from tracking
   const removeTrackedApplication = useCallback((applicationId: number) => {
     console.log('Removing tracked application ID:', applicationId);
-    console.log('Before removal, trackedAppIds:', trackedAppIds);
-    setTrackedAppIds(prev => prev.filter(id => id !== applicationId));
+    setTrackedAppIds(prev => {
+      const filtered = prev.filter(id => id !== applicationId);
+      console.log('After removal, trackedAppIds:', filtered);
+      return filtered;
+    });
   }, []);
 
   // Clear all tracked application IDs
