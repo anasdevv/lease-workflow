@@ -1,7 +1,8 @@
 'use client';
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Clock, Shield, CheckCircle, Loader2 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Users, Clock, Shield, CheckCircle } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 interface StatItem {
@@ -67,13 +68,13 @@ export default function ApplicationStats({ stats, isLoading }: ApplicationStatsP
                 <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
                   {stat.label}
                 </p>
-                <p className="text-3xl font-bold text-slate-800 mt-2">
+                <div className="text-3xl font-bold text-slate-800 mt-2">
                   {isLoading ? (
-                    <Loader2 className="w-8 h-8 animate-spin text-slate-400" />
+                    <Skeleton className="h-9 w-16" />
                   ) : (
                     stat.value
                   )}
-                </p>
+                </div>
               </div>
               <div className={`p-3 rounded-xl ${stat.bgColor}`}>
                 <stat.icon className={`w-6 h-6 ${stat.color}`} />

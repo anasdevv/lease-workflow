@@ -1,16 +1,17 @@
 'use client';
-import AdminApplicationCard from '@/components/application/application-card';
+import AdminApplicationCard, { ApplicationCardSkeleton } from '@/components/application/application-card';
 import ApplicationStats from '@/components/application/application-stats';
 import { NewApplicationModal } from '@/components/application/new-application-modal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useApplications, useApplicationStats, useUpdateApplicationStatus } from '@/hooks/use-applications';
 import { useDebounce } from '@/hooks/use-debounce';
 import { useListings } from '@/hooks/use-listings';
 import { useNewlyCreatedApplicationsPolling } from '@/hooks/use-newly-created-applications';
 import type { Listing } from '@/types';
-import { Filter, Loader2, Plus, Search, Shield } from "lucide-react";
+import { Filter, Plus, Search, Shield } from "lucide-react";
 import { useCallback, useState } from 'react';
 import { toast } from "sonner";
 
@@ -152,10 +153,11 @@ const handleRemoveTracking = useCallback((applicationId: number) => {
                         {/* Applications */}
                         <div className="space-y-4">
                             {isLoading ? (
-                                <div className="text-center py-12">
-                                    <Loader2 className="w-8 h-8 text-slate-400 animate-spin mx-auto mb-4" />
-                                    <p className="text-slate-500">Loading applications...</p>
-                                </div>
+                                <>
+                                    {[...Array(3)].map((_, i) => (
+                                      <ApplicationCardSkeleton key={i} />
+                                    ))}
+                                </>
                             ) : error ? (
                                 <div className="text-center py-12">
                                     <Shield className="w-12 h-12 text-red-300 mx-auto mb-4" />

@@ -25,6 +25,7 @@ import { toast } from 'sonner';
 import { useApplicationDetails } from '@/hooks/use-applications';
 import { ApplicationDocumentWithDocument } from '@/generated/prisma/client';
 import { useNewlyCreatedApplicationsPolling } from '@/hooks/use-newly-created-applications';
+import { Skeleton } from '../ui/skeleton';
 
 interface AdminApplicationCardProps {
   application: Application & {
@@ -261,4 +262,24 @@ export default function AdminApplicationCard({
       </CardContent>
     </Card>
   );
+}
+
+export function ApplicationCardSkeleton() {
+  return <Card  className="border-0 shadow-md">
+    <CardContent className="p-6">
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <Skeleton className="h-6 w-48 mb-2" />
+            <Skeleton className="h-4 w-64" />
+          </div>
+          <Skeleton className="h-8 w-20" />
+        </div>
+        <div className="flex gap-2">
+          <Skeleton className="h-6 w-24" />
+          <Skeleton className="h-6 w-24" />
+        </div>
+      </div>
+    </CardContent>
+  </Card>
 }
