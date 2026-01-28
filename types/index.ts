@@ -26,11 +26,10 @@ export type ReviewStatus = HumanReviewDecision['status'];
 export interface ApplicationFormData {
   applicantName: string;
   applicantEmail: string;
-  moveInDate: string;
 }
 
 export interface UploadedDocumentUI {
-  id: string;
+  id?: string;
   documentType: string;
   filename: string;
   fileUrl: string;
@@ -50,6 +49,16 @@ export interface ApiResponse<T> {
   data?: T;
   error?: string;
 }
+
+export interface ApiPaginatedResponse<T> extends ApiResponse<T>{
+    pagination : {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+    }
+}
+
 
 export type ApplicationWithRelations = Prisma.ApplicationGetPayload<{
   include: {
@@ -80,3 +89,12 @@ export type UpdateDocumentInput = Prisma.DocumentUpdateInput;
 export type ApplicationWhereInput = Prisma.ApplicationWhereInput;
 export type DocumentWhereInput = Prisma.DocumentWhereInput;
 export type ListingWhereInput = Prisma.ListingWhereInput;
+
+
+export interface ApplicationStats {
+  total: number;
+  pendingReview: number;
+  highRisk: number;
+  approved: number;
+}
+

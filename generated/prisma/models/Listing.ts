@@ -494,7 +494,7 @@ export type $ListingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ListingGetPayload<S extends boolean | null | undefined | ListingDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$ListingPayload, S>
 
 export type ListingCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<ListingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  Omit<ListingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
     select?: ListingCountAggregateInputType | true
   }
 
@@ -939,6 +939,7 @@ export type ListingFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Filter, which Listing to fetch.
    */
   where: Prisma.ListingWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -961,6 +962,7 @@ export type ListingFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    * Filter, which Listing to fetch.
    */
   where: Prisma.ListingWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1013,6 +1015,7 @@ export type ListingFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Filter by unique combinations of Listings.
    */
   distinct?: Prisma.ListingScalarFieldEnum | Prisma.ListingScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1065,6 +1068,7 @@ export type ListingFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    * Filter by unique combinations of Listings.
    */
   distinct?: Prisma.ListingScalarFieldEnum | Prisma.ListingScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1112,6 +1116,7 @@ export type ListingFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   skip?: number
   distinct?: Prisma.ListingScalarFieldEnum | Prisma.ListingScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1134,6 +1139,7 @@ export type ListingCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * The data needed to create a Listing.
    */
   data: Prisma.XOR<Prisma.ListingCreateInput, Prisma.ListingUncheckedCreateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1190,6 +1196,7 @@ export type ListingUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Choose, which Listing to update.
    */
   where: Prisma.ListingWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1264,6 +1271,7 @@ export type ListingUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * In case the Listing was found with the provided `where` argument, update it with this data.
    */
   update: Prisma.XOR<Prisma.ListingUpdateInput, Prisma.ListingUncheckedUpdateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1286,6 +1294,7 @@ export type ListingDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Filter which Listing to delete.
    */
   where: Prisma.ListingWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**

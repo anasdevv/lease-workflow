@@ -1014,7 +1014,7 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
 export type ApplicationGetPayload<S extends boolean | null | undefined | ApplicationDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$ApplicationPayload, S>
 
 export type ApplicationCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<ApplicationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  Omit<ApplicationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
     select?: ApplicationCountAggregateInputType | true
   }
 
@@ -1468,6 +1468,7 @@ export type ApplicationFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.I
    * Filter, which Application to fetch.
    */
   where: Prisma.ApplicationWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1490,6 +1491,7 @@ export type ApplicationFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Exten
    * Filter, which Application to fetch.
    */
   where: Prisma.ApplicationWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1542,6 +1544,7 @@ export type ApplicationFindFirstArgs<ExtArgs extends runtime.Types.Extensions.In
    * Filter by unique combinations of Applications.
    */
   distinct?: Prisma.ApplicationScalarFieldEnum | Prisma.ApplicationScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1594,6 +1597,7 @@ export type ApplicationFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extens
    * Filter by unique combinations of Applications.
    */
   distinct?: Prisma.ApplicationScalarFieldEnum | Prisma.ApplicationScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1641,6 +1645,7 @@ export type ApplicationFindManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   skip?: number
   distinct?: Prisma.ApplicationScalarFieldEnum | Prisma.ApplicationScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1663,6 +1668,7 @@ export type ApplicationCreateArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data needed to create a Application.
    */
   data: Prisma.XOR<Prisma.ApplicationCreateInput, Prisma.ApplicationUncheckedCreateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1723,6 +1729,7 @@ export type ApplicationUpdateArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Choose, which Application to update.
    */
   where: Prisma.ApplicationWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1801,6 +1808,7 @@ export type ApplicationUpsertArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * In case the Application was found with the provided `where` argument, update it with this data.
    */
   update: Prisma.XOR<Prisma.ApplicationUpdateInput, Prisma.ApplicationUncheckedUpdateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1823,6 +1831,7 @@ export type ApplicationDeleteArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Filter which Application to delete.
    */
   where: Prisma.ApplicationWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**

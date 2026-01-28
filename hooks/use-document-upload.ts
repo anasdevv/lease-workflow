@@ -51,7 +51,6 @@ export function useDocumentUpload(): UseDocumentUploadReturn {
       });
 
       const newDocument: UploadedDocumentUI = {
-        id: crypto.randomUUID(),
         documentType,
         filename: file.name,
         fileUrl: blob.url,

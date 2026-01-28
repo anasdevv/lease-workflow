@@ -679,7 +679,7 @@ export type $HumanReviewDecisionPayload<ExtArgs extends runtime.Types.Extensions
 export type HumanReviewDecisionGetPayload<S extends boolean | null | undefined | HumanReviewDecisionDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$HumanReviewDecisionPayload, S>
 
 export type HumanReviewDecisionCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<HumanReviewDecisionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  Omit<HumanReviewDecisionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
     select?: HumanReviewDecisionCountAggregateInputType | true
   }
 
@@ -1129,6 +1129,7 @@ export type HumanReviewDecisionFindUniqueArgs<ExtArgs extends runtime.Types.Exte
    * Filter, which HumanReviewDecision to fetch.
    */
   where: Prisma.HumanReviewDecisionWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1151,6 +1152,7 @@ export type HumanReviewDecisionFindUniqueOrThrowArgs<ExtArgs extends runtime.Typ
    * Filter, which HumanReviewDecision to fetch.
    */
   where: Prisma.HumanReviewDecisionWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1203,6 +1205,7 @@ export type HumanReviewDecisionFindFirstArgs<ExtArgs extends runtime.Types.Exten
    * Filter by unique combinations of HumanReviewDecisions.
    */
   distinct?: Prisma.HumanReviewDecisionScalarFieldEnum | Prisma.HumanReviewDecisionScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1255,6 +1258,7 @@ export type HumanReviewDecisionFindFirstOrThrowArgs<ExtArgs extends runtime.Type
    * Filter by unique combinations of HumanReviewDecisions.
    */
   distinct?: Prisma.HumanReviewDecisionScalarFieldEnum | Prisma.HumanReviewDecisionScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1302,6 +1306,7 @@ export type HumanReviewDecisionFindManyArgs<ExtArgs extends runtime.Types.Extens
    */
   skip?: number
   distinct?: Prisma.HumanReviewDecisionScalarFieldEnum | Prisma.HumanReviewDecisionScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1324,6 +1329,7 @@ export type HumanReviewDecisionCreateArgs<ExtArgs extends runtime.Types.Extensio
    * The data needed to create a HumanReviewDecision.
    */
   data: Prisma.XOR<Prisma.HumanReviewDecisionCreateInput, Prisma.HumanReviewDecisionUncheckedCreateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1384,6 +1390,7 @@ export type HumanReviewDecisionUpdateArgs<ExtArgs extends runtime.Types.Extensio
    * Choose, which HumanReviewDecision to update.
    */
   where: Prisma.HumanReviewDecisionWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1462,6 +1469,7 @@ export type HumanReviewDecisionUpsertArgs<ExtArgs extends runtime.Types.Extensio
    * In case the HumanReviewDecision was found with the provided `where` argument, update it with this data.
    */
   update: Prisma.XOR<Prisma.HumanReviewDecisionUpdateInput, Prisma.HumanReviewDecisionUncheckedUpdateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1484,6 +1492,7 @@ export type HumanReviewDecisionDeleteArgs<ExtArgs extends runtime.Types.Extensio
    * Filter which HumanReviewDecision to delete.
    */
   where: Prisma.HumanReviewDecisionWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**

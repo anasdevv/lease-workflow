@@ -5,8 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider        = "prisma-client"
+  output          = "../generated/prisma"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -19,68 +20,73 @@ model Listing {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   applications Application[]
+
+  @@index([address])
 }
 
 model Application {
-  id              Int      @id @default(autoincrement())
-  applicantName   String
-  applicantEmail  String
-  listingId       Int
-  listing         Listing  @relation(fields: [listingId], references: [id])
-  status          String   @default("draft") // draft, submitted, processing, approved, rejected
-  workflowRunId   String?
-  workflowStatus  String?  // running, paused_for_review, completed, failed
-  fraudScore      Float?
-  fraudSignals    Json?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  
+  id             Int      @id @default(autoincrement())
+  applicantName  String
+  applicantEmail String
+  listingId      Int
+  listing        Listing  @relation(fields: [listingId], references: [id])
+  status         String   @default("draft") // draft, submitted, processing, approved, rejected
+  workflowRunId  String?
+  workflowStatus String? // running, paused_for_review, completed, failed
+  fraudScore     Float?
+  fraudSignals   Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
   documents       ApplicationDocument[]
   reviewDecisions HumanReviewDecision[]
 
   @@index([listingId])
   @@index([applicantEmail])
+  @@index([applicantName])
+  @@index([status])
+  @@index([fraudScore])
 }
 
 model Document {
-  id              Int   @id @default(autoincrement())
-  blobUrl         String
-  filename        String
-  fileSize        Int
-  mimeType        String
-  uploadedAt      DateTime @default(now())
-  status          String   @default("uploaded") 
-  
+  id         Int      @id @default(autoincrement())
+  blobUrl    String
+  filename   String
+  fileSize   Int
+  mimeType   String
+  uploadedAt DateTime @default(now())
+  status     String   @default("uploaded")
+
   applicationDocuments ApplicationDocument[]
 }
 
 model ApplicationDocument {
-  id               Int   @id @default(autoincrement())
-  applicationId    Int
-  documentId       Int
-  documentType     String   // pay_stub, tax_return, id_verification
-  verificationStatus String @default("pending") // pending, extracted, verified, failed
-  aiExtractedData  Json?
-  confidenceScore  Float?
-  workflowStepId   String?
-  extractedAt      DateTime?
-  
+  id                 Int       @id @default(autoincrement())
+  applicationId      Int
+  documentId         Int
+  documentType       String // pay_stub, tax_return, id_verification
+  verificationStatus String    @default("pending") // pending, extracted, verified, failed
+  aiExtractedData    Json?
+  confidenceScore    Float?
+  workflowStepId     String?
+  extractedAt        DateTime?
+
   application Application @relation(fields: [applicationId], references: [id])
   document    Document    @relation(fields: [documentId], references: [id])
-  
+
   @@unique([applicationId, documentId])
 }
 
 model HumanReviewDecision {
-  id             Int   @id @default(autoincrement())
-  applicationId  Int
-  workflowRunId  String
-  decision       String?  // approve, reject
-  reason         String?
-  fraudContext   Json?
-  status         String   @default("pending") // pending, completed
-  reviewedAt     DateTime?
-  createdAt      DateTime @default(now())
-  
+  id            Int       @id @default(autoincrement())
+  applicationId Int
+  workflowRunId String
+  decision      String? // approve, reject
+  reason        String?
+  fraudContext  Json?
+  status        String    @default("pending") // pending, completed
+  reviewedAt    DateTime?
+  createdAt     DateTime  @default(now())
+
   application Application @relation(fields: [applicationId], references: [id])
 }

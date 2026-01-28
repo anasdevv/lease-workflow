@@ -842,7 +842,7 @@ export type $ApplicationDocumentPayload<ExtArgs extends runtime.Types.Extensions
 export type ApplicationDocumentGetPayload<S extends boolean | null | undefined | ApplicationDocumentDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$ApplicationDocumentPayload, S>
 
 export type ApplicationDocumentCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<ApplicationDocumentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  Omit<ApplicationDocumentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
     select?: ApplicationDocumentCountAggregateInputType | true
   }
 
@@ -1293,6 +1293,7 @@ export type ApplicationDocumentFindUniqueArgs<ExtArgs extends runtime.Types.Exte
    * Filter, which ApplicationDocument to fetch.
    */
   where: Prisma.ApplicationDocumentWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1315,6 +1316,7 @@ export type ApplicationDocumentFindUniqueOrThrowArgs<ExtArgs extends runtime.Typ
    * Filter, which ApplicationDocument to fetch.
    */
   where: Prisma.ApplicationDocumentWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1367,6 +1369,7 @@ export type ApplicationDocumentFindFirstArgs<ExtArgs extends runtime.Types.Exten
    * Filter by unique combinations of ApplicationDocuments.
    */
   distinct?: Prisma.ApplicationDocumentScalarFieldEnum | Prisma.ApplicationDocumentScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1419,6 +1422,7 @@ export type ApplicationDocumentFindFirstOrThrowArgs<ExtArgs extends runtime.Type
    * Filter by unique combinations of ApplicationDocuments.
    */
   distinct?: Prisma.ApplicationDocumentScalarFieldEnum | Prisma.ApplicationDocumentScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1466,6 +1470,7 @@ export type ApplicationDocumentFindManyArgs<ExtArgs extends runtime.Types.Extens
    */
   skip?: number
   distinct?: Prisma.ApplicationDocumentScalarFieldEnum | Prisma.ApplicationDocumentScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1488,6 +1493,7 @@ export type ApplicationDocumentCreateArgs<ExtArgs extends runtime.Types.Extensio
    * The data needed to create a ApplicationDocument.
    */
   data: Prisma.XOR<Prisma.ApplicationDocumentCreateInput, Prisma.ApplicationDocumentUncheckedCreateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1548,6 +1554,7 @@ export type ApplicationDocumentUpdateArgs<ExtArgs extends runtime.Types.Extensio
    * Choose, which ApplicationDocument to update.
    */
   where: Prisma.ApplicationDocumentWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1626,6 +1633,7 @@ export type ApplicationDocumentUpsertArgs<ExtArgs extends runtime.Types.Extensio
    * In case the ApplicationDocument was found with the provided `where` argument, update it with this data.
    */
   update: Prisma.XOR<Prisma.ApplicationDocumentUpdateInput, Prisma.ApplicationDocumentUncheckedUpdateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1648,6 +1656,7 @@ export type ApplicationDocumentDeleteArgs<ExtArgs extends runtime.Types.Extensio
    * Filter which ApplicationDocument to delete.
    */
   where: Prisma.ApplicationDocumentWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**

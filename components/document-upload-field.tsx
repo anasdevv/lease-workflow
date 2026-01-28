@@ -25,12 +25,11 @@ export function DocumentUploadField({
     if (!file) return;
 
     await onUpload(file, documentType.label);
-    // Reset input to allow re-uploading the same file
     e.target.value = '';
   };
 
   const acceptedTypes = Object.values(ACCEPTED_FILE_TYPES).flat().join(',');
-
+  console.log('uploadedDocument', uploadedDocument);
   return (
     <div className="border border-slate-200 rounded-lg p-4">
       <div className="flex items-center justify-between mb-2">
@@ -43,7 +42,7 @@ export function DocumentUploadField({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => onRemove(uploadedDocument.id)}
+            onClick={() => onRemove(uploadedDocument?.id)}
             className="text-red-500 hover:text-red-700 h-7"
           >
             <X className="w-4 h-4" />

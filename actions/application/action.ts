@@ -1,15 +1,18 @@
 'use server';
 
-import  prisma  from '@/lib/db';
-import { revalidatePath } from 'next/cache';
-import type { 
-  ApplicationFormData, 
-  UploadedDocumentUI, 
+import prisma from '@/lib/db';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import type {
+  ApplicationFormData,
+  UploadedDocumentUI,
   DocumentTypeId,
   ApiResponse,
   Listing,
   Application
 } from '@/types';
+import { ApplicationQueryTag } from '@/hooks/use-applications';
+import { processApplicationWorkflow } from '@/workflows/application/process-application';
+import { start } from 'workflow/api';
 
 interface CreateApplicationInput {
   formData: ApplicationFormData;
@@ -22,20 +25,18 @@ export async function createApplication(
 ): Promise<ApiResponse<Application>> {
   try {
     const { formData, listingId, documents } = input;
-    
+
     const application = await prisma.$transaction(async (tx) => {
-      // 1. Create the application
       const app = await tx.application.create({
         data: {
           applicantName: formData.applicantName,
           applicantEmail: formData.applicantEmail,
           listingId: listingId,
           status: 'submitted',
-          workflowStatus: 'running',
+          workflowStatus: 'idle',
         },
       });
 
-      // 2. Create all documents at once
       const documentData = documents.map(doc => ({
         blobUrl: doc.fileUrl,
         filename: doc.filename,
@@ -48,23 +49,19 @@ export async function createApplication(
         data: documentData,
       });
 
-      // 3. Get the created documents to link them
       const createdDocuments = await tx.document.findMany({
         where: {
           blobUrl: { in: documents.map(d => d.fileUrl) },
         },
-        orderBy: { createdAt: 'desc' },
         take: documents.length,
       });
 
-      // 4. Map UI document type to Prisma enum
       const documentTypeMap: Record<string, DocumentTypeId> = {
         'Pay Stub': 'pay_stub',
         'Tax Return': 'tax_return',
         'ID Verification': 'id_verification',
       };
 
-      // 5. Create all application-document links at once
       const applicationDocumentData = createdDocuments.map((doc, index) => ({
         applicationId: app.id,
         documentId: doc.id,
@@ -78,9 +75,18 @@ export async function createApplication(
 
       return app;
     });
+   const result = await start(processApplicationWorkflow,[
+      application.id
+    ]);
+    await prisma.application.update({
+      where: { id: application.id },
+      data: { workflowStatus: 'running' ,workflowRunId: result.runId},
+    })
+// await processApplicationWorkflow(application.id);
+    revalidatePath(`/`);
+      revalidateTag(ApplicationQueryTag.APPLICATIONS,'max'); 
+      revalidateTag(ApplicationQueryTag.APPLICATION_STATS,'max'); 
 
-    revalidatePath(`/listings/${listingId}`);
-    revalidatePath(`/applications/${listingId}`);
 
     return {
       success: true,
@@ -175,4 +181,85 @@ export async function getAllListings(): Promise<ApiResponse<Listing[]>> {
       error: error instanceof Error ? error.message : 'Failed to get listings',
     };
   }
+}
+
+interface SearchApplicationsParams {
+  searchQuery?: string;
+  status?: string;
+  riskLevel?: 'all' | 'high' | 'medium' | 'low';
+}
+
+export async function searchApplications({
+  searchQuery = '',
+  status = 'all',
+  riskLevel = 'all',
+}: SearchApplicationsParams): Promise<ApiResponse<Array<Application & { listing: Listing }>>> {
+  try {
+    console.log('Searching applications with:', { searchQuery, status, riskLevel });
+
+    // Build risk level filter
+    let fraudScoreFilter = {};
+    if (riskLevel !== 'all') {
+      if (riskLevel === 'high') {
+        fraudScoreFilter = { fraudScore: { gte: 70 } };
+      } else if (riskLevel === 'medium') {
+        fraudScoreFilter = { fraudScore: { gte: 40, lt: 70 } };
+      } else if (riskLevel === 'low') {
+        fraudScoreFilter = { fraudScore: { lt: 40 } };
+      }
+    }
+
+    // Only fetch documents if needed for display
+    const applications = await prisma.application.findMany({
+      relationLoadStrategy : 'join',
+      include: {
+        listing: true,
+        documents: {
+          include: {
+            document: true,
+          },
+          // Limit documents per application to avoid massive data fetches
+          take: 10,
+        },
+      },
+      where: {
+        AND: [
+          searchQuery
+            ? {
+              OR: [
+                { applicantName: { contains: searchQuery, mode: 'insensitive' } },
+                { applicantEmail: { contains: searchQuery, mode: 'insensitive' } },
+                { listing: { address: { contains: searchQuery, mode: 'insensitive' } } },
+              ],
+            }
+            : {},
+          status !== 'all' ? { status } : {},
+          fraudScoreFilter,
+        ],
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 50, // Add pagination - fetch max 50 at a time
+    });
+
+    return {
+      success: true,
+      data: applications,
+    };
+  } catch (error) {
+    console.log('Error during application search:', error);
+    console.error('Failed to search applications:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to search applications',
+    };
+  }
+}
+
+export async function markWorkflowStarted(applicationId: number) {
+  await prisma.application.update({
+    where: { id: applicationId },
+    data: { workflowStatus: 'running' },
+  });
 }

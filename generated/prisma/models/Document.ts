@@ -577,7 +577,7 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type DocumentGetPayload<S extends boolean | null | undefined | DocumentDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$DocumentPayload, S>
 
 export type DocumentCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<DocumentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  Omit<DocumentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
     select?: DocumentCountAggregateInputType | true
   }
 
@@ -1025,6 +1025,7 @@ export type DocumentFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Filter, which Document to fetch.
    */
   where: Prisma.DocumentWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1047,6 +1048,7 @@ export type DocumentFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    * Filter, which Document to fetch.
    */
   where: Prisma.DocumentWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1099,6 +1101,7 @@ export type DocumentFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Filter by unique combinations of Documents.
    */
   distinct?: Prisma.DocumentScalarFieldEnum | Prisma.DocumentScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1151,6 +1154,7 @@ export type DocumentFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extension
    * Filter by unique combinations of Documents.
    */
   distinct?: Prisma.DocumentScalarFieldEnum | Prisma.DocumentScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1198,6 +1202,7 @@ export type DocumentFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   skip?: number
   distinct?: Prisma.DocumentScalarFieldEnum | Prisma.DocumentScalarFieldEnum[]
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1220,6 +1225,7 @@ export type DocumentCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data needed to create a Document.
    */
   data: Prisma.XOR<Prisma.DocumentCreateInput, Prisma.DocumentUncheckedCreateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1276,6 +1282,7 @@ export type DocumentUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Choose, which Document to update.
    */
   where: Prisma.DocumentWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1350,6 +1357,7 @@ export type DocumentUpsertArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * In case the Document was found with the provided `where` argument, update it with this data.
    */
   update: Prisma.XOR<Prisma.DocumentUpdateInput, Prisma.DocumentUncheckedUpdateInput>
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
@@ -1372,6 +1380,7 @@ export type DocumentDeleteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Filter which Document to delete.
    */
   where: Prisma.DocumentWhereUniqueInput
+  relationLoadStrategy?: Prisma.RelationLoadStrategy
 }
 
 /**
