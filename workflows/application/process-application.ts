@@ -7,6 +7,7 @@ import { fetch } from 'workflow';
 import { getInternalApiHeaders } from '@/lib/workflow-api';
 import { backgroundCheckStep } from './steps/background-check';
 import { WORKFLOW_STEPS } from '@/lib/utils';
+import { StepError, updateLastCompletedStep } from './steps/utils';
 
 interface HumanReviewEvent {
   reviewId: number;
@@ -55,7 +56,6 @@ export async function processApplicationWorkflow(applicationId: number) {
   );
 
   try {
-    // STEP 1: Extract document data in parallel
     console.log(`[Workflow] Step ${WORKFLOW_STEPS[0].number}: ${WORKFLOW_STEPS[0].name}...`);
     let extractedResult;
     try {
@@ -64,10 +64,8 @@ export async function processApplicationWorkflow(applicationId: number) {
       console.error(`[Workflow] Step ${WORKFLOW_STEPS[0].number} failed - ${WORKFLOW_STEPS[0].name}`, error);
       throw new StepError(WORKFLOW_STEPS[0].id, error);
     }
-    // Track completed step
     await updateLastCompletedStep(applicationId, WORKFLOW_STEPS[0].id);
 
-    // STEP 2: Cross-validate and run fraud detection
     console.log(`[Workflow] Step ${WORKFLOW_STEPS[1].number}: ${WORKFLOW_STEPS[1].name}...`);
     let fraudResult;
     try {
@@ -79,10 +77,8 @@ export async function processApplicationWorkflow(applicationId: number) {
       console.error(`[Workflow] Step ${WORKFLOW_STEPS[1].number} failed - ${WORKFLOW_STEPS[1].name}`, error);
       throw new StepError(WORKFLOW_STEPS[1].id, error);
     }
-    // Track completed step
     await updateLastCompletedStep(applicationId, WORKFLOW_STEPS[1].id);
 
-    // STEP 3: Route based on fraud analysis
     console.log(`[Workflow] Step ${WORKFLOW_STEPS[2].number}: ${WORKFLOW_STEPS[2].name}...`);
     let routeResult;
     try {
@@ -95,18 +91,14 @@ export async function processApplicationWorkflow(applicationId: number) {
       console.error(`[Workflow] Step ${WORKFLOW_STEPS[2].number} failed - ${WORKFLOW_STEPS[2].name}`, error);
       throw new StepError(WORKFLOW_STEPS[2].id, error);
     }
-    // Track completed step
     await updateLastCompletedStep(applicationId, WORKFLOW_STEPS[2].id);
 
-    // STEP 4: Await human decision if needed or proceed with auto-approval
     console.log(`[Workflow] Step ${WORKFLOW_STEPS[3].number}: ${WORKFLOW_STEPS[3].name}...`);
     let decisionResult;
     try {
       if (routeResult.path === 'manual_review') {
-        // Create the hook here in the workflow context
         const humanReviewHook = defineHook<HumanReviewEvent>();
         
-        // Create review decision record
         await fetch(
           `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/internal/applications/${routeResult.applicationId}/review-decision`,
           {
@@ -119,7 +111,6 @@ export async function processApplicationWorkflow(applicationId: number) {
           }
         );
 
-        // Wait for human review decision via hook - this must stay in workflow context
         const reviewEvents = humanReviewHook.create({
           token: `app-${routeResult.applicationId}`,
         });
@@ -133,7 +124,6 @@ export async function processApplicationWorkflow(applicationId: number) {
           decision = event.decision;
           reason = event.reason;
 
-          // Update the review record
           await fetch(
             `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/internal/applications/${routeResult.applicationId}/review-decision`,
             {
@@ -147,7 +137,7 @@ export async function processApplicationWorkflow(applicationId: number) {
             }
           );
 
-          break; // Exit after first decision
+          break; 
         }
 
         decisionResult = {
@@ -156,7 +146,6 @@ export async function processApplicationWorkflow(applicationId: number) {
           reason,
         };
       } else {
-        // Auto-approve path
         console.log(`[Workflow] Auto-approving application ${routeResult.applicationId}`);
         decisionResult = {
           applicationId: routeResult.applicationId,
@@ -167,10 +156,8 @@ export async function processApplicationWorkflow(applicationId: number) {
       console.error(`[Workflow] Step ${WORKFLOW_STEPS[3].number} failed - ${WORKFLOW_STEPS[3].name}`, error);
       throw new StepError(WORKFLOW_STEPS[3].id, error);
     }
-    // Track completed step
     await updateLastCompletedStep(applicationId, WORKFLOW_STEPS[3].id);
 
-    // STEP 5: Background check
     console.log(`[Workflow] Step ${WORKFLOW_STEPS[4].number}: ${WORKFLOW_STEPS[4].name}...`);
     let bgCheckResult;
     try {
@@ -182,10 +169,8 @@ export async function processApplicationWorkflow(applicationId: number) {
       console.error(`[Workflow] Step ${WORKFLOW_STEPS[4].number} failed - ${WORKFLOW_STEPS[4].name}`, error);
       throw new StepError(WORKFLOW_STEPS[4].id, error);
     }
-    // Track completed step
     await updateLastCompletedStep(applicationId, WORKFLOW_STEPS[4].id);
 
-    // STEP 6: Finalize application
     console.log(`[Workflow] Step ${WORKFLOW_STEPS[5].number}: ${WORKFLOW_STEPS[5].name}...`);
     let finalResult;
     try {
@@ -198,14 +183,12 @@ export async function processApplicationWorkflow(applicationId: number) {
       console.error(`[Workflow] Step ${WORKFLOW_STEPS[5].number} failed - ${WORKFLOW_STEPS[5].name}`, error);
       throw new StepError(WORKFLOW_STEPS[5].id, error);
     }
-    // Track completed step
     await updateLastCompletedStep(applicationId, WORKFLOW_STEPS[5].id);
 
     console.log(
       `[Workflow] Application ${applicationId} workflow completed with status: ${finalResult.status}`
     );
 
-    // Update workflow status to completed
     await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/internal/applications/${applicationId}`,
       {
@@ -279,44 +262,5 @@ export async function processApplicationWorkflow(applicationId: number) {
 
 
 
-
-/**
- * Helper function to update the last completed step for an application
- * This allows UI to show progress and enables resuming from the last completed step
- */
-async function updateLastCompletedStep(
-  applicationId: number,
-  stepId: string
-): Promise<void> {
-  try {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/internal/applications/${applicationId}`,
-      {
-        method: 'PATCH',
-        headers: getInternalApiHeaders(),
-        body: JSON.stringify({
-          lastCompletedStep: stepId,
-        }),
-      }
-    );
-  } catch (error) {
-    console.error(
-      `[Workflow] Failed to update lastCompletedStep for application ${applicationId}:`,
-      error
-    );
-    // Don't throw - we don't want to fail the workflow because of a tracking update failure
-  }
-}
-
-// Helper class to track which step failed
-class StepError extends Error {
-  constructor(
-    public step: string,
-    public originalError: unknown
-  ) {
-    super(`Step failed: ${step}`);
-    this.name = 'StepError';
-  }
-}
 
 
