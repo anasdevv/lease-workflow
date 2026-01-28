@@ -43,7 +43,7 @@ interface AdminApplicationCardProps {
 }
 
 
-export default function AdminApplicationCard({
+export default function ApplicationCard({
   application,
   onUpdateStatus,
   shouldPoll,
@@ -52,7 +52,7 @@ export default function AdminApplicationCard({
   const [isExpanded, setIsExpanded] = useState(false);
   const [reviewNotes, setReviewNotes] = useState('');
   const [isSubmittingDecision, setIsSubmittingDecision] = useState(false);
-  console.log('AdminApplicationCard - shouldPoll:', shouldPoll);
+  const [submittedDecision, setSubmittedDecision] = useState<'approved' | 'rejected' | null>(null);
   const { isLoading, data: applicationDetails } = useApplicationDetails(
     application.id,
     isExpanded,
@@ -70,6 +70,7 @@ export default function AdminApplicationCard({
 
   const handleSubmitReviewDecision = async (decision: 'approved' | 'rejected') => {
     setIsSubmittingDecision(true);
+    setSubmittedDecision(decision); // Optimistic update - show immediate feedback
     try {
       const result = await submitReviewDecision({
         applicationId: application.id,
@@ -83,12 +84,16 @@ export default function AdminApplicationCard({
         if (onUpdateStatus) {
           onUpdateStatus(application.id, decision);
         }
+        // Keep the submitted decision visible briefly to show confirmation
+        // Then let polling handle the UI update
       } else {
         toast.error(result.error || 'Failed to submit decision');
+        setSubmittedDecision(null); // Reset on error
       }
     } catch (error) {
       toast.error('An error occurred while submitting the decision');
       console.error(error);
+      setSubmittedDecision(null); // Reset on error
     } finally {
       setIsSubmittingDecision(false);
     }
@@ -96,7 +101,6 @@ export default function AdminApplicationCard({
 
   useEffect(() => {
     if (currentApplication.status === 'completed' || currentApplication.workflowStatus === 'completed' || currentApplication.status === 'rejected' || currentApplication.workflowStatus === 'failed') {
-      console.log('Application completed/failed/rejected, removing from tracking:', currentApplication.id);
       onRemoveTracking?.(currentApplication.id);
     }
 
@@ -213,7 +217,7 @@ export default function AdminApplicationCard({
 
             <WorkflowStatus application={currentApplication} />
 
-            {currentApplication.workflowStatus === 'paused_for_review' && currentApplication?.reviewDecisions && currentApplication?.reviewDecisions?.length > 0 && (
+            {currentApplication.workflowStatus === 'paused_for_review' && currentApplication?.reviewDecisions && currentApplication?.reviewDecisions?.length > 0 && !submittedDecision && (
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 space-y-3">
                 <div>
                   <label className="text-sm font-medium text-slate-700 block mb-2">
@@ -256,6 +260,8 @@ export default function AdminApplicationCard({
                 </div>
               </div>
             )}
+
+     
 
           </div>
         )}

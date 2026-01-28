@@ -10,7 +10,6 @@ export async function POST(request: Request): Promise<NextResponse> {
             request,
             onBeforeGenerateToken: async (pathname) => {
                 // Add authentication/authorization logic here
-                // For example, verify the user is logged in
 
                 return {
                     allowedContentTypes: ['application/pdf', 'image/jpeg', 'image/png'],
@@ -20,10 +19,8 @@ export async function POST(request: Request): Promise<NextResponse> {
                 };
             },
             onUploadCompleted: async ({ blob, tokenPayload }) => {
-                // Optional: Run any server-side logic after upload completes
-                // For example, save blob URL to database
-                console.log('Upload completed:', blob.url);
-            }
+                // Handle post-upload logic here, e.g., save blob info to database
+                }
         });
 
         return NextResponse.json(jsonResponse);

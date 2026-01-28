@@ -5,8 +5,7 @@ import { NewApplicationModal } from '@/components/application/new-application-mo
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useApplications, useApplicationStats, useUpdateApplicationStatus } from '@/hooks/use-applications';
+import { useApplications, useApplicationStats } from '@/hooks/use-applications';
 import { useDebounce } from '@/hooks/use-debounce';
 import { useListings } from '@/hooks/use-listings';
 import { useNewlyCreatedApplicationsPolling } from '@/hooks/use-newly-created-applications';
@@ -21,35 +20,33 @@ export default function AdminLeaseReview() {
     const [riskFilter, setRiskFilter] = useState<'all' | 'high' | 'medium' | 'low'>('all');
     const [page, setPage] = useState(1);
     const [showNewApplicationModal, setShowNewApplicationModal] = useState(false);
-    const {data: listings , isLoading: listingsLoading} = useListings();
-    
+    const { data: listings, isLoading: listingsLoading } = useListings();
+
 
     const debouncedSearch = useDebounce(searchQuery, 300);
 
-    const { data: statsData, isLoading: statsLoading } = useApplicationStats();
+    const { data: statsData, isLoading: statsLoading, refetch: refetchApplicationStats } = useApplicationStats();
 
-    const { data, isLoading, error , refetch } = useApplications({
+    const { data, isLoading, error, refetch } = useApplications({
         searchQuery: debouncedSearch,
         status: statusFilter,
         riskLevel: riskFilter, page,
     });
 
-    const { trackedAppIds, trackApplication , removeTrackedApplication } = useNewlyCreatedApplicationsPolling();
+    const { trackedAppIds, trackApplication, removeTrackedApplication } = useNewlyCreatedApplicationsPolling();
 
 
     const applications = data?.data || [];
     const pagination = data?.pagination;
 
     const handleApplicationCreated = useCallback((applicationId: number) => {
-                refetch();
+        refetch();
+        refetchApplicationStats();
         trackApplication(applicationId);
-        toast.success('Application created! Monitoring for updates...');
-    }, [trackApplication]);
-    console.log('Tracked Application IDs for Polling:', trackedAppIds);
-  
-const handleRemoveTracking = useCallback((applicationId: number) => {
+    }, [trackApplication, refetch, refetchApplicationStats]);
+
+    const handleRemoveTracking = useCallback((applicationId: number) => {
         removeTrackedApplication(applicationId);
-        console.log('Stopped tracking application ID:', applicationId);
     }, [removeTrackedApplication]);
 
     return (
@@ -84,13 +81,13 @@ const handleRemoveTracking = useCallback((applicationId: number) => {
                 {/* Applications List */}
                 <Card className="border-0 shadow-xl">
                     {/* <div className='flex items-center justify-between'> */}
-                        <CardHeader className="border-b bg-white">
-                            <CardTitle className="text-lg font-semibold text-slate-800">Applications</CardTitle>
-                            <CardDescription className="text-slate-500">
-                                {pagination ? `${pagination.total} application${pagination.total !== 1 ? 's' : ''} found` : 'Loading...'}
-                            </CardDescription>
-                        </CardHeader>
-                       
+                    <CardHeader className="border-b bg-white">
+                        <CardTitle className="text-lg font-semibold text-slate-800">Applications</CardTitle>
+                        <CardDescription className="text-slate-500">
+                            {pagination ? `${pagination.total} application${pagination.total !== 1 ? 's' : ''} found` : 'Loading...'}
+                        </CardDescription>
+                    </CardHeader>
+
                     {/* </div> */}
 
                     <CardContent className="p-6">
@@ -155,7 +152,7 @@ const handleRemoveTracking = useCallback((applicationId: number) => {
                             {isLoading ? (
                                 <>
                                     {[...Array(3)].map((_, i) => (
-                                      <ApplicationCardSkeleton key={i} />
+                                        <ApplicationCardSkeleton key={i} />
                                     ))}
                                 </>
                             ) : error ? (
