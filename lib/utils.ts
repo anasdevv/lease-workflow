@@ -31,7 +31,7 @@ export const WORKFLOW_STEPS: WorkflowStep[] = [
   { id: 'extract_documents', name: 'Extract Documents', number: 1, label: 'Document Extraction' },
   { id: 'fraud_analysis', name: 'Fraud Analysis', number: 2, label: 'Fraud Detection' },
   { id: 'route_decision', name: 'Route Decision', number: 3, label: 'Route Decision' },
-  { id: 'await_human_decision', name: 'Await Human Decision', number: 4, label: 'Human Review' },
+  { id: 'await_human_decision', name: 'Await Human Decision', number: 4, label: 'Review' },
   { id: 'background_check', name: 'Background Check', number: 5, label: 'Background Check' },
   { id: 'finalize_application', name: 'Finalize Application', number: 6, label: 'Final Review' },
 ];
